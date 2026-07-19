@@ -1,0 +1,13 @@
+import { PrismaClient } from "@prisma/client";
+
+// Prevents exhausting your DB connection limit due to Next.js hot-reloading
+// creating a new PrismaClient on every file change in development.
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

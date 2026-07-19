@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f5f7fc;
+  --border: #e2e6f0;
+  --ink: #0a1128;
+  --ink-soft: #5b6b8c;
+}
+
+.dark {
+  --bg: #070b18;
+  --surface: #0e1630;
+  --surface-2: #0b1226;
+  --border: #1e2a4a;
+  --ink: #f2f5fc;
+  --ink-soft: #93a0c2;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    @apply font-body antialiased transition-colors duration-300;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-ink {
+    color: var(--ink);
+  }
+  .text-ink-soft {
+    color: var(--ink-soft);
+  }
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  .bg-surface-2 {
+    background-color: var(--surface-2);
+  }
+  .border-themed {
+    border-color: var(--border);
+  }
+  .bg-themed-line {
+    background-color: var(--border);
+  }
+}
+
+/* Scroll-reveal primitive used by <Reveal> — see src/components/ui/Reveal.tsx */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Used by the Hero's floating particles (Tailwind arbitrary animation) */
+@keyframes particleFloat {
+  0%, 100% { transform: translate(0, 0); opacity: 0.25; }
+  50% { transform: translate(10px, -26px); opacity: 0.9; }
+}
