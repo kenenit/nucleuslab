@@ -173,6 +173,51 @@ async function main() {
     });
   }
 
+  // --- Portfolio projects ---
+  const projects = [
+    {
+      slug: "biku-home-solution",
+      title: "Biku Home Solution",
+      category: "Mobile",
+      summary:
+        "Households managing smart devices across three or four separate apps, with no single view of what was on, scheduled, or costing money. We built one app to control, automate, and monitor an entire home from a single, simple interface.",
+      results: "4 apps consolidated into 1",
+      technologies: ["React Native", "IoT", "Firebase"],
+      featured: true,
+      order: 1,
+    },
+    {
+      slug: "digital-menu",
+      title: "Digital Menu",
+      category: "Web",
+      summary:
+        "Restaurants reprinting menus every time a price or dish changed, and guests waiting on staff to take orders during peak hours. Digital Menu replaced printed menus with QR-code ordering that updates instantly and syncs straight to the kitchen.",
+      results: "Instant menu updates, zero reprints",
+      technologies: ["Next.js", "Real-time sync", "QR ordering"],
+      featured: true,
+      order: 2,
+    },
+    {
+      slug: "company-profile-website",
+      title: "Company Profile Website",
+      category: "Web",
+      summary:
+        "Small businesses needing a credible web presence without months of custom design work or ongoing agency fees. A template-driven profile site product that gets a business online, professional, and maintainable by their own team within days.",
+      results: "Launch in days, not months",
+      technologies: ["Next.js", "Headless CMS", "SEO"],
+      featured: false,
+      order: 3,
+    },
+  ];
+
+  for (const project of projects) {
+    await prisma.project.upsert({
+      where: { slug: project.slug },
+      update: project,
+      create: project,
+    });
+  }
+
   // --- Industries ---
   const industries = [
     "Restaurants", "Hotels", "Healthcare", "Education", "Construction",

@@ -1,16 +1,25 @@
 import { Check } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
-import type { products } from "@/data/products";
+import type { ProductDisplay } from "@/lib/content";
 
-type Product = (typeof products)[number];
+export function ProductBlock({ product, reverse = false, isLast = false }: { product: ProductDisplay; reverse?: boolean; isLast?: boolean }) {
+  // CTAs are derived from whichever URLs are actually set, rather than requiring
+  // separately-authored CTA labels — so a product added purely through the admin
+  // dashboard (which only collects these URLs) gets sensible buttons automatically.
+  const ctas: { label: string; href: string }[] = [];
+  if (product.storeUrlAndroid) ctas.push({ label: "Get it on Google Play", href: product.storeUrlAndroid });
+  if (product.storeUrlIos) ctas.push({ label: "Get it on the App Store", href: product.storeUrlIos });
+  if (product.liveDemoUrl) ctas.push({ label: "See live demo", href: product.liveDemoUrl });
+  if (product.learnMoreUrl) ctas.push({ label: "Learn more", href: product.learnMoreUrl });
+  if (ctas.length === 0) ctas.push({ label: "Request a quote", href: "/contact" });
+  const [primaryCta, ...restCtas] = ctas;
 
-export function ProductBlock({ product, reverse = false, isLast = false }: { product: Product; reverse?: boolean; isLast?: boolean }) {
   return (
     <section id={product.slug} className="mx-auto max-w-[1280px] scroll-mt-[100px] px-5 md:px-10">
       <div className={`grid items-center gap-12 py-16 md:grid-cols-2 md:gap-20 md:py-24 ${isLast ? "" : "border-b border-themed"}`}>
         <div className={reverse ? "md:order-2" : ""}>
           <Reveal>
-            <span className="mb-3 block font-mono text-[.8125rem] text-brand">{product.intro}</span>
+            <span className="mb-3 block font-mono text-[.8125rem] text-brand">A Nucleus Labs product</span>
           </Reveal>
           <Reveal delayMs={40}>
             <h2 className="mb-2 font-display text-[1.8rem] font-semibold text-ink md:text-[2.4rem]">{product.name}</h2>
@@ -31,22 +40,18 @@ export function ProductBlock({ product, reverse = false, isLast = false }: { pro
           </Reveal>
           <Reveal delayMs={180} className="flex flex-wrap items-center gap-4">
             <a
-              href={product.primaryCta.href}
+              href={primaryCta.href}
               className="inline-flex items-center gap-2 rounded-sm bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-md"
             >
-              {product.primaryCta.label}
+              {primaryCta.label}
             </a>
-            {product.secondaryCta && (
+            {restCtas.map((cta) => (
               <a
-                href={product.secondaryCta.href}
+                key={cta.label}
+                href={cta.href}
                 className="inline-flex items-center gap-2 rounded-sm border border-themed px-6 py-3.5 text-sm font-semibold text-ink transition-all hover:-translate-y-0.5 hover:border-brand hover:text-brand"
               >
-                {product.secondaryCta.label}
-              </a>
-            )}
-            {product.socialLinks?.map((link) => (
-              <a key={link.label} href={link.href} className="text-sm font-medium text-ink-soft hover:text-brand">
-                {link.label}
+                {cta.label}
               </a>
             ))}
           </Reveal>

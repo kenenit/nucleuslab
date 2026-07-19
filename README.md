@@ -1,6 +1,6 @@
 # Nucleus Labs — Website & Admin Platform
 
-Next.js 14 (App Router) + TypeScript + Tailwind CSS + Prisma/PostgreSQL, built from the approved
+Next.js 16 (App Router) + TypeScript + Tailwind CSS + Prisma/PostgreSQL, built from the approved
 HTML design prototype (Home, About, Services).
 
 ## Stack
@@ -119,12 +119,59 @@ prisma/
   seed.ts
 ```
 
-## Deployment notes
+## Content: what's live from the database vs. static
 
-- Any Node host works (Vercel is the path of least resistance for Next.js). Provision a PostgreSQL
-  instance (Neon, Supabase, Railway, RDS) and set `DATABASE_URL`.
-- Run `npm run db:push` (or set up `prisma migrate deploy` in your CI) against production before first
-  deploy, then `npm run db:seed` once if you want the starter content.
-- Set `NEXTAUTH_URL` to your production URL and generate a fresh `NEXTAUTH_SECRET`.
-- Change the seeded admin password immediately, or delete the seeded user and create your own via
-  `prisma studio`.
+**Live from the database (admin dashboard edits show up on the site within about a minute):**
+Services, Products, Portfolio, Team. Each page revalidates every 60 seconds (`export const revalidate = 60`
+in the relevant `page.tsx`) rather than only re-checking at build time — so editing something in `/admin`
+doesn't require a redeploy, it just takes up to a minute to appear. Each also has a fallback to
+placeholder/seed content if the table is empty or the database is briefly unreachable, so the site never
+shows a broken section.
+
+**Still static files in `src/data/`** (no admin screen yet — same copyable pattern as above):
+Testimonials, Blog posts, Careers/jobs listings, Industries, Process steps.
+
+## Deploying (GitHub + Vercel)
+
+1. **Push to GitHub.** From this project folder:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/YOUR_USERNAME/nucleus-labs.git
+   git push -u origin main
+   ```
+   (Create the empty repo on github.com first — don't initialize it with a README, or the push
+   above will conflict with what's already in this folder.)
+
+2. **Import into Vercel.** Go to vercel.com → "Add New Project" → import the GitHub repo. Vercel
+   auto-detects Next.js; no config needed.
+
+3. **Set environment variables** in the Vercel project settings:
+   - `DATABASE_URL` — your Neon connection string (same as local `.env`)
+   - `AUTH_SECRET` — generate a fresh one for production: `openssl rand -base64 32`
+     (your existing local `.env` uses `NEXTAUTH_SECRET` — that still works too, Auth.js v5 accepts
+     both names, but `AUTH_SECRET` is the current convention)
+   - `NEXT_PUBLIC_SITE_URL` — set this to your Vercel URL once you know it (e.g.
+     `https://nucleus-labs.vercel.app`) — used for metadata/sitemap, not auth
+   - You do **not** need `NEXTAUTH_URL` / `AUTH_URL` on Vercel — Auth.js v5 auto-detects the
+     deployment URL from Vercel's system environment variables (as long as "Automatically expose
+     System Environment Variables" is checked in Project Settings, which is on by default).
+
+4. **Deploy.** Vercel builds and gives you a live URL to share with your team. (`npm install` will
+   automatically run `prisma generate` via the `postinstall` script — no extra build config needed.)
+
+5. **Change the seeded admin password** before sharing the URL widely — the default
+   `admin@nucleuslabs.com` / `changeme123` from the seed script is meant for local dev only.
+   Easiest way: open `npx prisma studio` against your production `DATABASE_URL` and update the
+   `passwordHash` field (hash a new password with bcrypt first), or add a proper "change password"
+   flow to the admin dashboard.
+
+6. **Every future `git push` to `main` auto-deploys** — Vercel watches the repo. This is also how
+   your team reviews changes: push, Vercel builds a preview or production deploy automatically.
+
+Once the team has reviewed it, replace placeholder content through `/admin` (Services, Products,
+Portfolio, Team) rather than editing code — that's what those screens are for.
+
+

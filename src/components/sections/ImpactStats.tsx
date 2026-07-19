@@ -10,7 +10,7 @@ const stats = [
 
 export function ImpactStats() {
   return (
-    <section className="bg-ink py-16 md:py-28 dark:bg-surface-2">
+    <section className="bg-[#0A1128] py-16 md:py-28 dark:bg-surface-2">
       <div className="mx-auto max-w-[1280px] px-5 md:px-10">
         <Reveal>
           <span className="font-mono text-xs uppercase tracking-[.14em] text-accent">OUR IMPACT</span>

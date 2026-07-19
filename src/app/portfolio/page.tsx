@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/sections/PageHero";
 import { PortfolioGrid } from "@/components/sections/PortfolioGrid";
 import { ContactCta } from "@/components/sections/ContactCta";
+import { getPortfolioProjects } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -9,7 +10,11 @@ export const metadata = buildMetadata({
   path: "/portfolio",
 });
 
-export default function PortfolioPage() {
+export const revalidate = 60;
+
+export default async function PortfolioPage() {
+  const projects = await getPortfolioProjects();
+
   return (
     <>
       <PageHero
@@ -19,7 +24,7 @@ export default function PortfolioPage() {
         crumbLabel="Portfolio"
       />
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
-        <PortfolioGrid />
+        <PortfolioGrid projects={projects} />
       </section>
       <ContactCta />
     </>

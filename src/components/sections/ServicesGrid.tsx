@@ -1,8 +1,10 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { ServiceCard } from "@/components/cards/ServiceCard";
-import { services } from "@/data/services";
+import { getServices } from "@/lib/content";
 
-export function ServicesGrid() {
+export async function ServicesGrid() {
+  const services = await getServices();
+
   return (
     <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-28">
       <Reveal className="mb-16 max-w-[640px]">

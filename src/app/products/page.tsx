@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/sections/PageHero";
 import { ProductBlock } from "@/components/sections/ProductBlock";
 import { ContactCta } from "@/components/sections/ContactCta";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -10,13 +10,17 @@ export const metadata = buildMetadata({
   path: "/products",
 });
 
-export default function ProductsPage() {
+export const revalidate = 60;
+
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
     <>
       <PageHero
         eyebrow="OUR PRODUCTS"
         title="What we've built for ourselves."
-        description="Three in-house products, built and maintained by the same team that builds for clients — proof we use our own standards on our own work."
+        description="Products built and maintained by the same team that builds for clients — proof we use our own standards on our own work."
         crumbLabel="Products"
       />
       {products.map((product, i) => (

@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Home, UtensilsCrossed, Globe, ArrowRight } from "lucide-react";
+import { FolderKanban, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
-import { caseStudies, type CaseStudy } from "@/data/case-studies";
-
-const iconMap = { home: Home, menu: UtensilsCrossed, globe: Globe };
+import type { CaseStudyDisplay } from "@/lib/content";
 
 const filters = [
   { key: "all", label: "All work" },
@@ -17,11 +15,11 @@ const filters = [
 
 type FilterKey = (typeof filters)[number]["key"];
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ projects }: { projects: CaseStudyDisplay[] }) {
   const [active, setActive] = useState<FilterKey>("all");
 
-  const visible: CaseStudy[] =
-    active === "all" ? caseStudies : caseStudies.filter((c) => c.categories.includes(active));
+  const visible =
+    active === "all" ? projects : projects.filter((p) => p.category.toLowerCase().includes(active));
 
   return (
     <>
@@ -41,9 +39,14 @@ export function PortfolioGrid() {
         ))}
       </div>
 
+      {visible.length === 0 && (
+        <p className="rounded-lg bg-surface-2 p-8 text-center text-sm text-ink-soft">
+          No projects in this category yet.
+        </p>
+      )}
+
       <div className="flex flex-col gap-6">
         {visible.map((study, i) => {
-          const Icon = iconMap[study.icon];
           const reverse = i % 2 === 1;
           return (
             <Reveal
@@ -57,40 +60,41 @@ export function PortfolioGrid() {
                 }`}
               >
                 <span className="absolute left-[18px] top-[18px] rounded-full border border-themed bg-surface px-3.5 py-1.5 font-mono text-[.72rem]">
-                  {study.tag}
+                  {study.category}
                 </span>
-                <Icon className="h-20 w-20 text-brand opacity-50" strokeWidth={1.2} />
+                <FolderKanban className="h-20 w-20 text-brand opacity-50" strokeWidth={1.2} />
               </div>
 
               <div className="flex flex-col justify-center p-8 md:p-10">
                 <h3 className="mb-3 font-display text-2xl font-semibold text-ink">{study.title}</h3>
                 <p className="mb-5 text-[.9375rem] leading-relaxed text-ink-soft">{study.summary}</p>
 
-                <div className="mb-5 flex flex-wrap gap-6">
-                  {study.results.map((r) => (
-                    <div key={r.label}>
-                      <strong className="block font-display text-2xl font-bold text-brand">{r.value}</strong>
-                      <span className="text-[.78rem] text-ink-soft">{r.label}</span>
-                    </div>
-                  ))}
-                </div>
+                {study.results.length > 0 && (
+                  <div className="mb-5 flex flex-wrap gap-6">
+                    {study.results.map((r) => (
+                      <div key={r.label}>
+                        <strong className="block font-display text-2xl font-bold text-brand">{r.value}</strong>
+                        <span className="text-[.78rem] text-ink-soft">{r.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-                <div className="mb-5 flex flex-wrap gap-2">
-                  {study.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-themed px-2.5 py-1 font-mono text-[.72rem] text-ink-soft"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                {study.tech.length > 0 && (
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {study.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-themed px-2.5 py-1 font-mono text-[.72rem] text-ink-soft"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-                <Link
-                  href={study.productHref}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand"
-                >
-                  View product page
+                <Link href="/products" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                  View related product
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -100,8 +104,7 @@ export function PortfolioGrid() {
       </div>
 
       <Reveal className="mt-10 rounded-lg bg-surface-2 p-6 text-center text-sm text-ink-soft">
-        More case studies — including client projects with full before/after breakdowns — are added here as
-        engagements complete. This grid is already wired to filter by category as the list grows.
+        Manage these case studies from the admin dashboard — new ones you add there show up here automatically.
       </Reveal>
     </>
   );

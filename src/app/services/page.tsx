@@ -3,7 +3,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ServiceSubnav } from "@/components/sections/ServiceSubnav";
 import { ServiceBlock } from "@/components/sections/ServiceBlock";
 import { ContactCta } from "@/components/sections/ContactCta";
-import { services } from "@/data/services";
+import { getServices } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -11,6 +11,8 @@ export const metadata = buildMetadata({
   description: "Software development, AI solutions, website and mobile app development, UI/UX design, and custom solutions.",
   path: "/services",
 });
+
+export const revalidate = 60;
 
 const iconMap = {
   "code-2": Code2,
@@ -30,7 +32,9 @@ const ctaLabels: Record<string, string> = {
   "custom-solutions": "Tell us the problem",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <>
       <PageHero
@@ -39,7 +43,7 @@ export default function ServicesPage() {
         description="Every engagement draws on the same in-house team across design, engineering, and AI — so nothing gets lost in a handoff between agencies."
         crumbLabel="Services"
       />
-      <ServiceSubnav />
+      <ServiceSubnav services={services} />
       {services.map((service, i) => (
         <ServiceBlock
           key={service.slug}

@@ -1,6 +1,6 @@
-import { services } from "@/data/services";
+import type { ServiceContent } from "@/types";
 
-export function ServiceSubnav() {
+export function ServiceSubnav({ services }: { services: ServiceContent[] }) {
   return (
     <nav
       aria-label="Jump to a service"

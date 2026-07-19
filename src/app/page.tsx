@@ -15,6 +15,11 @@ export const metadata = buildMetadata({
   path: "/",
 });
 
+// Re-check the database at most once a minute rather than only at build time,
+// so edits made in /admin (Services, in this page's case) show up without
+// needing a full redeploy.
+export const revalidate = 60;
+
 export default function HomePage() {
   return (
     <>

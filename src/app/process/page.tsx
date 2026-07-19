@@ -31,7 +31,7 @@ export default function ProcessPage() {
       />
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         <div className="relative pl-14">
-          <div className="absolute bottom-1.5 left-5 top-1.5 w-px bg-themed-line" />
+          <div className="absolute bottom-1.5 left-5 top-1.5 w-px bg-themed" />
           {steps.map((step, i) => (
             <Reveal key={step.title} delayMs={i * 50} className="relative pb-12 last:pb-0">
               <div className="absolute -left-14 top-0 flex h-10 w-10 items-center justify-center rounded-full border border-themed bg-surface font-mono text-xs font-semibold text-brand shadow-sm">

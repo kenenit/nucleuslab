@@ -16,15 +16,23 @@ const config: Config = {
           light: "#E7EDFE",
         },
         accent: "#2FD5C8",
-        // NOTE: "ink" and "surface" are intentionally NOT registered here.
-        // text-ink / text-ink-soft / bg-surface / bg-surface-2 / border-themed
-        // are defined in src/app/globals.css using CSS variables (see :root
-        // and .dark), so they respond correctly to dark mode. Registering
-        // them here too would generate a second, static (non-theme-aware)
-        // version of each class under the same name — Tailwind's generated
-        // utilities can win the cascade over the custom ones, which is
-        // exactly what caused text to go unreadable in dark mode / white-on-
-        // white backgrounds. Don't re-add them without renaming.
+        // These read from the CSS variables in globals.css (:root / .dark),
+        // so text-ink, bg-surface-2, border-themed, etc. — and every Tailwind
+        // variant of them (hover:, dark:, group-hover:, md:, ...) — stay
+        // theme-aware automatically. Don't hand-write duplicate .text-ink /
+        // .bg-surface classes in globals.css instead of this: Tailwind can't
+        // generate variants for hand-written classes, which is exactly what
+        // caused several buttons' hover states and one section's background
+        // to silently do nothing.
+        ink: {
+          DEFAULT: "var(--ink)",
+          soft: "var(--ink-soft)",
+        },
+        surface: {
+          DEFAULT: "var(--surface)",
+          2: "var(--surface-2)",
+        },
+        themed: "var(--border)",
       },
       fontFamily: {
         display: ["var(--font-space-grotesk)", "sans-serif"],
