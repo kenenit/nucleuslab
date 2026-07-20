@@ -13,7 +13,7 @@ export function StatCounter({ target, suffix = "" }: { target: number; suffix?: 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasRun.current) {
+        if (entry?.isIntersecting && !hasRun.current) {
           hasRun.current = true;
           const step = Math.max(1, Math.round(target / 40));
           let current = 0;

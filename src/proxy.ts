@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { auth } from "@/auth";
 
 // Next.js 16 renamed `middleware.ts` to `proxy.ts` (and the exported function
 // to `proxy`) — same request-interception behavior, clearer naming, and it
 // now runs on the Node.js runtime by default instead of the limited Edge
 // runtime. See: https://nextjs.org/docs/app/getting-started/proxy
-export default auth((req) => {
+export default auth((req: NextRequest & { auth: unknown }) => {
   const isLoggedIn = !!req.auth;
   const { pathname } = req.nextUrl;
 

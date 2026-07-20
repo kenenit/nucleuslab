@@ -11,8 +11,8 @@ export function ProductBlock({ product, reverse = false, isLast = false }: { pro
   if (product.storeUrlIos) ctas.push({ label: "Get it on the App Store", href: product.storeUrlIos });
   if (product.liveDemoUrl) ctas.push({ label: "See live demo", href: product.liveDemoUrl });
   if (product.learnMoreUrl) ctas.push({ label: "Learn more", href: product.learnMoreUrl });
-  if (ctas.length === 0) ctas.push({ label: "Request a quote", href: "/contact" });
-  const [primaryCta, ...restCtas] = ctas;
+  const primaryCta = ctas[0] ?? { label: "Request a quote", href: "/contact" };
+  const restCtas = ctas.slice(1);
 
   return (
     <section id={product.slug} className="mx-auto max-w-[1280px] scroll-mt-[100px] px-5 md:px-10">

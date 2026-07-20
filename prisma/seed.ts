@@ -223,11 +223,11 @@ async function main() {
     "Restaurants", "Hotels", "Healthcare", "Education", "Construction",
     "Manufacturing", "Retail", "NGOs", "Startups", "Corporate Businesses",
   ];
-  for (let i = 0; i < industries.length; i++) {
+  for (const [i, name] of industries.entries()) {
     await prisma.industry.upsert({
-      where: { name: industries[i] },
+      where: { name },
       update: {},
-      create: { name: industries[i], order: i },
+      create: { name, order: i },
     });
   }
 

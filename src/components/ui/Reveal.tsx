@@ -19,7 +19,7 @@ export function Reveal({ children, className, delayMs = 0, style }: RevealProps)
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           el.classList.add("in-view");
           observer.unobserve(el);
         }
