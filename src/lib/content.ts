@@ -3,6 +3,7 @@ import { withRetry } from "@/lib/db-retry";
 import { services as staticServices } from "@/data/services";
 import { products as staticProducts } from "@/data/products";
 import { caseStudies as staticCaseStudies } from "@/data/case-studies";
+import { blogPosts as staticBlogPosts } from "@/data/blog-posts";
 import type { ServiceContent } from "@/types";
 
 /**
@@ -139,5 +140,58 @@ export async function getTeamMembers(): Promise<TeamMemberDisplay[]> {
   } catch (err) {
     console.error("[content] getTeamMembers falling back to placeholders", err);
     return [];
+  }
+}
+
+export interface BlogPostDisplay {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  coverImage: string | null;
+  publishedAt: string | null;
+}
+
+export async function getBlogPosts(): Promise<BlogPostDisplay[]> {
+  try {
+    const rows = await withRetry(() =>
+      prisma.blogPost.findMany({ where: { published: true }, orderBy: { publishedAt: "desc" } })
+    );
+    if (rows.length === 0) {
+      return staticBlogPosts.map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt,
+        content: "",
+        category: p.category,
+        tags: [],
+        coverImage: null,
+        publishedAt: null,
+      }));
+    }
+    return rows.map((r) => ({
+      slug: r.slug,
+      title: r.title,
+      excerpt: r.excerpt,
+      content: r.content,
+      category: r.category,
+      tags: r.tags,
+      coverImage: r.coverImage,
+      publishedAt: r.publishedAt ? r.publishedAt.toISOString() : null,
+    }));
+  } catch (err) {
+    console.error("[content] getBlogPosts falling back to static data", err);
+    return staticBlogPosts.map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      excerpt: p.excerpt,
+      content: "",
+      category: p.category,
+      tags: [],
+      coverImage: null,
+      publishedAt: null,
+    }));
   }
 }

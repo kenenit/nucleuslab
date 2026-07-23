@@ -1,4 +1,4 @@
-import { Layers, Mail, Send, FolderKanban, Package, Users } from "lucide-react";
+import { Layers, Mail, Send, FolderKanban, Package, Users, FileText } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { withRetry } from "@/lib/db-retry";
 
@@ -18,15 +18,16 @@ async function safeCount(fn: () => Promise<number>): Promise<StatResult> {
 }
 
 async function getStats() {
-  const [services, contactSubmissions, newsletterSubscribers, projects, products, team] = await Promise.all([
+  const [services, contactSubmissions, newsletterSubscribers, projects, products, team, blog] = await Promise.all([
     safeCount(() => prisma.service.count()),
     safeCount(() => prisma.contactSubmission.count()),
     safeCount(() => prisma.newsletterSubscriber.count({ where: { subscribed: true } })),
     safeCount(() => prisma.project.count()),
     safeCount(() => prisma.product.count()),
     safeCount(() => prisma.teamMember.count()),
+    safeCount(() => prisma.blogPost.count()),
   ]);
-  return { services, contactSubmissions, newsletterSubscribers, projects, products, team };
+  return { services, contactSubmissions, newsletterSubscribers, projects, products, team, blog };
 }
 
 export default async function AdminOverviewPage() {
@@ -38,6 +39,7 @@ export default async function AdminOverviewPage() {
     { label: "Products", stat: stats.products, icon: Package, href: "/admin/products" },
     { label: "Portfolio projects", stat: stats.projects, icon: FolderKanban, href: "/admin/portfolio" },
     { label: "Team members", stat: stats.team, icon: Users, href: "/admin/team" },
+    { label: "Blog posts", stat: stats.blog, icon: FileText, href: "/admin/blog" },
     { label: "Contact submissions", stat: stats.contactSubmissions, icon: Mail, href: "/admin/contact-submissions" },
     { label: "Newsletter subscribers", stat: stats.newsletterSubscribers, icon: Send, href: "/admin/newsletter" },
   ];

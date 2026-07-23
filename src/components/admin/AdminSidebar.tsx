@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { LayoutDashboard, Layers, Package, FolderKanban, Users, Mail, Send, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Layers, Package, FolderKanban, Users, FileText, Mail, Send, LogOut, ExternalLink } from "lucide-react";
 import { OrbitMark } from "@/components/ui/OrbitMark";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ const links = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/portfolio", label: "Portfolio", icon: FolderKanban },
   { href: "/admin/team", label: "Team", icon: Users },
+  { href: "/admin/blog", label: "Blog", icon: FileText },
   { href: "/admin/contact-submissions", label: "Contact submissions", icon: Mail },
   { href: "/admin/newsletter", label: "Newsletter", icon: Send },
 ];

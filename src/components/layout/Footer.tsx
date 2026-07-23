@@ -2,9 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Linkedin, Twitter, Instagram } from "lucide-react";
+import { Linkedin, Twitter, Instagram, Facebook, Youtube } from "lucide-react";
 import { OrbitMark } from "@/components/ui/OrbitMark";
 import { footerServiceLinks, footerProductLinks, footerCompanyLinks, footerResourceLinks } from "@/data/nav";
+import { socialLinks } from "@/data/social";
+
+const socialIcons = [
+  { key: "linkedin", label: "LinkedIn", Icon: Linkedin },
+  { key: "twitter", label: "Twitter / X", Icon: Twitter },
+  { key: "instagram", label: "Instagram", Icon: Instagram },
+  { key: "facebook", label: "Facebook", Icon: Facebook },
+  { key: "youtube", label: "YouTube", Icon: Youtube },
+] as const;
 
 export function Footer() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -41,27 +50,20 @@ export function Footer() {
               Software, AI, and digital products engineered at the core of your business.
             </p>
             <div className="mt-5 flex gap-2.5">
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-themed transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="Twitter / X"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-themed transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-themed transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
+              {socialIcons
+                .filter(({ key }) => socialLinks[key])
+                .map(({ key, label, Icon }) => (
+                  <a
+                    key={key}
+                    href={socialLinks[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-themed transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
             </div>
 
             <h4 className="mb-3 mt-7 font-mono text-[13px] uppercase tracking-wider text-ink-soft">Stay updated</h4>
