@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { OrbitMark } from "@/components/ui/OrbitMark";
+import { Logo } from "@/components/ui/Logo";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-surface-2 px-5">
       <div className="w-full max-w-[380px] rounded-lg border border-themed bg-surface p-8 shadow-lg">
         <div className="mb-8 flex items-center gap-2.5 font-display text-lg font-bold text-ink">
-          <OrbitMark size={28} />
+          <Logo size={28} />
           Nucleus Labs
         </div>
         <h1 className="mb-1 font-display text-xl font-semibold text-ink">Admin sign in</h1>

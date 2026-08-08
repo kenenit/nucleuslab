@@ -1,9 +1,12 @@
 import { Star } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
-import { testimonials } from "@/data/testimonials";
+import { getTestimonials } from "@/lib/content";
 
-export function Testimonials() {
-  const featured = testimonials.slice(0, 3);
+export async function Testimonials() {
+  const { items, usingPlaceholders } = await getTestimonials();
+  const featured = items.slice(0, 3);
+
+  if (featured.length === 0) return null;
 
   return (
     <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-28">
@@ -13,13 +16,15 @@ export function Testimonials() {
           What early partners say.
         </h2>
         <p className="mt-3 text-lg text-ink-soft">
-          Placeholder quotes — swap in real client testimonials via the admin dashboard as engagements complete.
+          {usingPlaceholders
+            ? "Placeholder quotes — swap in real client testimonials via the admin dashboard as engagements complete."
+            : "What it's actually like working with us, in our clients' words."}
         </p>
       </Reveal>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {featured.map((t, i) => (
           <Reveal
-            key={t.name}
+            key={t.id}
             delayMs={i * 70}
             className="flex min-h-[260px] flex-col justify-between rounded-lg border border-themed bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >

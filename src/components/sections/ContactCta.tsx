@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/Button";
 interface ContactCtaProps {
   title?: string;
   body?: string;
+  buttonLabel?: string;
 }
 
 export function ContactCta({
-  title = "Have a project in mind? Let's build it together.",
-  body = "Tell us what you're building — we'll reply within one business day with next steps.",
+  title = "Let's Build Something Great Together",
+  body = "Whether you're launching a startup, digitizing your business, or creating your next big idea, Nucleus Labs is ready to bring your vision to life.",
+  buttonLabel = "Contact Us",
 }: ContactCtaProps) {
   return (
     <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
@@ -27,7 +29,7 @@ export function ContactCta({
           <p className="mt-3 max-w-[440px] text-white/80">{body}</p>
         </div>
         <Button href="/contact" variant="primary" className="!bg-white !text-brand-dark hover:!bg-surface-2">
-          Get in touch
+          {buttonLabel}
         </Button>
       </Reveal>
     </section>

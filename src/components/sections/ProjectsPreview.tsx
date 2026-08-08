@@ -5,20 +5,20 @@ import { Button } from "@/components/ui/Button";
 const projects = [
   {
     title: "Biku Home Solution",
-    description: "A smart-home control app that turns any household into a connected, manageable space.",
-    tags: ["Mobile", "IoT", "React Native"],
+    description: "Connecting customers with trusted home service professionals — plumbing, electrical, cleaning, and more.",
+    tags: ["Startup", "Mobile", "React Native"],
     icon: Home,
   },
   {
     title: "Digital Menu",
-    description: "QR-code ordering that lets restaurants update menus instantly and serve guests faster.",
-    tags: ["Web", "Real-time", "Next.js"],
+    description: "A QR code-powered restaurant menu — no app install required — that's simple to browse and manage.",
+    tags: ["Hospitality", "QR ordering", "Next.js"],
     icon: UtensilsCrossed,
   },
   {
     title: "Company Profile Website",
-    description: "A template-driven profile site that gets small businesses a credible web presence fast.",
-    tags: ["Web", "CMS", "SEO"],
+    description: "A professional website that showcases a business's services, portfolio, and brand identity.",
+    tags: ["Business", "CMS", "SEO"],
     icon: Globe,
   },
 ];

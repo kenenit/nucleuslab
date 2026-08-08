@@ -15,6 +15,7 @@ const projectInputSchema = z.object({
   results: z.string().optional(),
   technologies: z.array(z.string()),
   coverImage: z.string().optional(),
+  gallery: z.array(z.string()).optional(),
   beforeImage: z.string().optional(),
   afterImage: z.string().optional(),
   featured: z.boolean().optional(),

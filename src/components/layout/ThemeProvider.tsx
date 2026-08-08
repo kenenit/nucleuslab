@@ -11,8 +11,18 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
+// Reads the already-resolved theme synchronously on the client (matches the
+// inline script in layout.tsx that sets the "dark" class before paint), so
+// components that branch on `theme` — like the logo — render the right
+// variant on the very first frame instead of flashing the wrong one after
+// hydration.
+function getInitialTheme(): Theme {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("nucleus-theme") as Theme | null;

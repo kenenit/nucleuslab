@@ -103,6 +103,27 @@ model Project {
 }
 
 // ============================================================
+// SITE-WIDE SETTINGS: contact details & footer social links
+// (single row — the admin Settings page reads/writes id "main")
+// ============================================================
+
+model SiteSettings {
+  id             String   @id @default("main")
+  contactEmail   String   @default("NucleusLabs.et@gmail.com")
+  contactPhone   String   @default("+251 92 324 3132")
+  contactAddress String   @default("We work remotely — no physical office right now.")
+  contactHours   String   @default("Mon–Fri, 9:00–18:00 EAT")
+  socialLinkedin String   @default("")
+  socialTwitter  String   @default("")
+  socialInstagram String  @default("https://instagram.com/biku.et")
+  socialFacebook String   @default("")
+  socialTiktok   String   @default("")
+  socialYoutube  String   @default("")
+  socialGithub   String   @default("")
+  updatedAt      DateTime @updatedAt
+}
+
+// ============================================================
 // CONTENT: TESTIMONIALS
 // ============================================================
 
@@ -126,17 +147,21 @@ model Testimonial {
 // ============================================================
 
 model TeamMember {
-  id          String   @id @default(cuid())
-  name        String
-  role        String
-  bio         String?  @db.Text
-  photoUrl    String?
-  linkedinUrl String?
-  isLeadership Boolean @default(false)
-  order       Int      @default(0)
-  published   Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  role         String
+  bio          String?  @db.Text
+  photoUrl     String?
+  linkedinUrl  String?
+  githubUrl    String?
+  portfolioUrl String?
+  email        String?
+  phone        String?
+  isLeadership Boolean  @default(false)
+  order        Int      @default(0)
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 // ============================================================

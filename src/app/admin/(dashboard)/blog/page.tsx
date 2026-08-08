@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 interface BlogRow {
   id: string;
@@ -175,7 +176,7 @@ export default function AdminBlogPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-5">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-surface p-6 shadow-lg">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-ink">{editingId ? "Edit post" : "New post"}</h2>
@@ -195,9 +196,7 @@ export default function AdminBlogPage() {
               <Field label="Content (full post body)">
                 <textarea required rows={8} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} className="input" />
               </Field>
-              <Field label="Cover image URL (optional)">
-                <input value={form.coverImage} onChange={(e) => setForm({ ...form, coverImage: e.target.value })} className="input" placeholder="https://..." />
-              </Field>
+              <ImageUpload label="Cover image (optional)" value={form.coverImage} onChange={(url) => setForm({ ...form, coverImage: url })} />
               <Field label="Tags (comma-separated)">
                 <input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="input" />
               </Field>

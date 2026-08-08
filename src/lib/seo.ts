@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 const SITE_NAME = "Nucleus Labs";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nucleuslabs.com";
 const DEFAULT_DESCRIPTION =
-  "Nucleus Labs designs and engineers software, AI systems, and digital products — from first prototype to production scale.";
+  "We build innovative digital solutions that transform ideas into powerful technology. From startups to established businesses, Nucleus Labs delivers modern software, websites, and AI-powered solutions that drive growth and innovation.";
 
 interface BuildMetadataOptions {
   title: string;

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 interface TeamRow {
   id: string;
@@ -10,6 +11,10 @@ interface TeamRow {
   bio: string | null;
   photoUrl: string | null;
   linkedinUrl: string | null;
+  githubUrl: string | null;
+  portfolioUrl: string | null;
+  email: string | null;
+  phone: string | null;
   isLeadership: boolean;
   order: number;
   published: boolean;
@@ -21,6 +26,10 @@ const emptyForm = {
   bio: "",
   photoUrl: "",
   linkedinUrl: "",
+  githubUrl: "",
+  portfolioUrl: "",
+  email: "",
+  phone: "",
   isLeadership: false,
   order: 0,
   published: true,
@@ -66,6 +75,10 @@ export default function AdminTeamPage() {
       bio: row.bio ?? "",
       photoUrl: row.photoUrl ?? "",
       linkedinUrl: row.linkedinUrl ?? "",
+      githubUrl: row.githubUrl ?? "",
+      portfolioUrl: row.portfolioUrl ?? "",
+      email: row.email ?? "",
+      phone: row.phone ?? "",
       isLeadership: row.isLeadership,
       order: row.order,
       published: row.published,
@@ -181,7 +194,7 @@ export default function AdminTeamPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-5">
           <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-surface p-6 shadow-lg">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-ink">{editingId ? "Edit team member" : "Add team member"}</h2>
@@ -197,11 +210,21 @@ export default function AdminTeamPage() {
               <Field label="Bio (optional)">
                 <textarea rows={3} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} className="input" />
               </Field>
-              <Field label="Photo URL (optional)">
-                <input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value })} className="input" placeholder="https://..." />
+              <ImageUpload label="Photo (optional)" value={form.photoUrl} onChange={(url) => setForm({ ...form, photoUrl: url })} />
+              <Field label="Email (optional)">
+                <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="input" placeholder="name@nucleuslabs.et" />
+              </Field>
+              <Field label="Phone (optional)">
+                <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="input" placeholder="+251 9..." />
               </Field>
               <Field label="LinkedIn URL (optional)">
                 <input value={form.linkedinUrl} onChange={(e) => setForm({ ...form, linkedinUrl: e.target.value })} className="input" placeholder="https://linkedin.com/in/..." />
+              </Field>
+              <Field label="GitHub URL (optional)">
+                <input value={form.githubUrl} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} className="input" placeholder="https://github.com/..." />
+              </Field>
+              <Field label="Portfolio URL (optional)">
+                <input value={form.portfolioUrl} onChange={(e) => setForm({ ...form, portfolioUrl: e.target.value })} className="input" placeholder="https://..." />
               </Field>
               <div className="flex items-center gap-6">
                 <Field label="Order">

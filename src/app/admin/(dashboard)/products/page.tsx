@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { MultiImageUpload } from "@/components/admin/MultiImageUpload";
 
 interface ProductRow {
   id: string;
@@ -10,17 +11,21 @@ interface ProductRow {
   tagline: string;
   overview: string;
   features: string[];
+  screenshots: string[];
   storeUrlIos: string | null;
   storeUrlAndroid: string | null;
   liveDemoUrl: string | null;
   learnMoreUrl: string | null;
+  socialLinks: Record<string, string> | null;
   order: number;
   published: boolean;
 }
 
 const emptyForm = {
   slug: "", name: "", tagline: "", overview: "", features: "",
+  screenshots: [] as string[],
   storeUrlIos: "", storeUrlAndroid: "", liveDemoUrl: "", learnMoreUrl: "",
+  socialLinks: "",
   order: 0, published: true,
 };
 
@@ -61,8 +66,12 @@ export default function AdminProductsPage() {
     setForm({
       slug: row.slug, name: row.name, tagline: row.tagline, overview: row.overview,
       features: row.features.join("\n"),
+      screenshots: row.screenshots,
       storeUrlIos: row.storeUrlIos ?? "", storeUrlAndroid: row.storeUrlAndroid ?? "",
       liveDemoUrl: row.liveDemoUrl ?? "", learnMoreUrl: row.learnMoreUrl ?? "",
+      socialLinks: row.socialLinks
+        ? Object.entries(row.socialLinks).map(([k, v]) => `${k}|${v}`).join("\n")
+        : "",
       order: row.order, published: row.published,
     });
     setEditingId(row.id);
@@ -72,9 +81,17 @@ export default function AdminProductsPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    const socialLinksObj: Record<string, string> = {};
+    form.socialLinks.split("\n").forEach((line) => {
+      const [key, ...rest] = line.split("|");
+      const url = rest.join("|").trim();
+      if (key?.trim() && url) socialLinksObj[key.trim()] = url;
+    });
     const payload = {
       ...form,
       features: form.features.split("\n").map((s) => s.trim()).filter(Boolean),
+      screenshots: form.screenshots,
+      socialLinks: socialLinksObj,
       order: Number(form.order),
     };
 
@@ -169,7 +186,7 @@ export default function AdminProductsPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-5">
           <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-surface p-6 shadow-lg">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-ink">{editingId ? "Edit product" : "New product"}</h2>
@@ -181,9 +198,13 @@ export default function AdminProductsPage() {
               <Field label="Tagline"><input required value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} className="input" /></Field>
               <Field label="Overview"><textarea required rows={3} value={form.overview} onChange={(e) => setForm({ ...form, overview: e.target.value })} className="input" /></Field>
               <Field label="Features (one per line)"><textarea rows={3} value={form.features} onChange={(e) => setForm({ ...form, features: e.target.value })} className="input" /></Field>
+              <MultiImageUpload label="Screenshots" values={form.screenshots} onChange={(urls) => setForm({ ...form, screenshots: urls })} />
               <Field label="App Store URL (optional)"><input value={form.storeUrlIos} onChange={(e) => setForm({ ...form, storeUrlIos: e.target.value })} className="input" /></Field>
               <Field label="Google Play URL (optional)"><input value={form.storeUrlAndroid} onChange={(e) => setForm({ ...form, storeUrlAndroid: e.target.value })} className="input" /></Field>
               <Field label="Live demo URL (optional)"><input value={form.liveDemoUrl} onChange={(e) => setForm({ ...form, liveDemoUrl: e.target.value })} className="input" /></Field>
+              <Field label="Social links (one per line, format: label|url — e.g. instagram|https://instagram.com/yourpage)">
+                <textarea rows={3} value={form.socialLinks} onChange={(e) => setForm({ ...form, socialLinks: e.target.value })} className="input" placeholder="instagram|https://instagram.com/..." />
+              </Field>
               <div className="flex items-center gap-6">
                 <Field label="Order"><input type="number" value={form.order} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} className="input w-24" /></Field>
                 <label className="mt-6 flex items-center gap-2 text-sm text-ink">

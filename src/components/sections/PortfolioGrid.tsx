@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { FolderKanban, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
@@ -8,9 +9,9 @@ import type { CaseStudyDisplay } from "@/lib/content";
 
 const filters = [
   { key: "all", label: "All work" },
-  { key: "mobile", label: "Mobile" },
-  { key: "web", label: "Web" },
-  { key: "ai", label: "AI / IoT" },
+  { key: "startup", label: "Startup Products" },
+  { key: "hospitality", label: "Hospitality" },
+  { key: "business", label: "Business Websites" },
 ] as const;
 
 type FilterKey = (typeof filters)[number]["key"];
@@ -55,14 +56,18 @@ export function PortfolioGrid({ projects }: { projects: CaseStudyDisplay[] }) {
               className="grid overflow-hidden rounded-lg border border-themed bg-surface transition-shadow duration-300 hover:shadow-lg md:grid-cols-2"
             >
               <div
-                className={`relative flex min-h-[220px] items-center justify-center bg-gradient-to-br from-brand-light to-surface-2 md:min-h-[280px] ${
+                className={`relative flex min-h-[220px] items-center justify-center overflow-hidden bg-gradient-to-br from-brand-light to-surface-2 md:min-h-[280px] ${
                   reverse ? "md:order-2" : ""
                 }`}
               >
-                <span className="absolute left-[18px] top-[18px] rounded-full border border-themed bg-surface px-3.5 py-1.5 font-mono text-[.72rem]">
+                <span className="absolute left-[18px] top-[18px] z-10 rounded-full border border-themed bg-surface px-3.5 py-1.5 font-mono text-[.72rem]">
                   {study.category}
                 </span>
-                <FolderKanban className="h-20 w-20 text-brand opacity-50" strokeWidth={1.2} />
+                {study.coverImage ? (
+                  <Image src={study.coverImage} alt={study.title} fill className="object-cover" />
+                ) : (
+                  <FolderKanban className="h-20 w-20 text-brand opacity-50" strokeWidth={1.2} />
+                )}
               </div>
 
               <div className="flex flex-col justify-center p-8 md:p-10">

@@ -10,10 +10,12 @@ const productInputSchema = z.object({
   tagline: z.string().min(1),
   overview: z.string().min(1),
   features: z.array(z.string()),
+  screenshots: z.array(z.string()).optional(),
   storeUrlIos: z.string().optional(),
   storeUrlAndroid: z.string().optional(),
   liveDemoUrl: z.string().optional(),
   learnMoreUrl: z.string().optional(),
+  socialLinks: z.record(z.string()).optional(),
   order: z.number().optional(),
   published: z.boolean().optional(),
 });

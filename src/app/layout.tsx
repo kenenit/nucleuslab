@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { buildMetadata, organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
@@ -28,25 +26,32 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nucleus Labs — Build from the core.",
+  title: "Nucleus Labs — Build Smarter. Grow Faster.",
   description:
-    "Nucleus Labs designs and engineers the software, AI systems, and digital products companies build their operations on.",
+    "We build innovative digital solutions that transform ideas into powerful technology. From startups to established businesses, Nucleus Labs delivers modern software, websites, and AI-powered solutions that drive growth and innovation.",
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable}`}>
+      <head>
+        {/* Runs before paint so the "dark" class (and therefore the logo/colors)
+            is correct on the very first frame — no flash of the wrong theme. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('nucleus-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}",
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
-        <ThemeProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

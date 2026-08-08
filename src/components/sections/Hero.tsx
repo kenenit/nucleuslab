@@ -61,24 +61,24 @@ export function Hero() {
             </Reveal>
             <Reveal delayMs={80}>
               <h1 className="my-5 font-display text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.03em] text-white sm:text-6xl lg:text-[4.4rem]">
-                Build from
+                Build Smarter.
                 <br />
-                the core.
+                Grow Faster.
               </h1>
             </Reveal>
             <Reveal delayMs={140}>
               <p className="mb-8 max-w-[480px] text-lg text-[#B7C2E2]">
-                Nucleus Labs designs and engineers the software, AI systems, and digital products companies build
-                their operations on — from first prototype to production scale.
+                Innovative software, websites, AI solutions, and digital products designed to help businesses thrive
+                in the digital era.
               </p>
             </Reveal>
             <Reveal delayMs={200}>
               <div className="mb-12 flex flex-wrap gap-4">
-                <Button href="/contact" variant="primary">
-                  Start a project
+                <Button href="/services" variant="primary">
+                  Explore Our Services
                 </Button>
                 <Button href="/portfolio" variant="glass">
-                  See our work
+                  View Our Projects
                 </Button>
               </div>
             </Reveal>

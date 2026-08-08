@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { ImageUpload } from "@/components/admin/ImageUpload";
+import { MultiImageUpload } from "@/components/admin/MultiImageUpload";
 
 interface ProjectRow {
   id: string;
@@ -14,6 +16,10 @@ interface ProjectRow {
   solution: string | null;
   results: string | null;
   technologies: string[];
+  coverImage: string | null;
+  gallery: string[];
+  beforeImage: string | null;
+  afterImage: string | null;
   featured: boolean;
   order: number;
   published: boolean;
@@ -22,6 +28,7 @@ interface ProjectRow {
 const emptyForm = {
   slug: "", title: "", client: "", category: "", summary: "",
   problem: "", solution: "", results: "", technologies: "",
+  coverImage: "", gallery: [] as string[], beforeImage: "", afterImage: "",
   featured: false, order: 0, published: true,
 };
 
@@ -63,6 +70,8 @@ export default function AdminPortfolioPage() {
       slug: row.slug, title: row.title, client: row.client ?? "", category: row.category,
       summary: row.summary, problem: row.problem ?? "", solution: row.solution ?? "",
       results: row.results ?? "", technologies: row.technologies.join(", "),
+      coverImage: row.coverImage ?? "", gallery: row.gallery ?? [],
+      beforeImage: row.beforeImage ?? "", afterImage: row.afterImage ?? "",
       featured: row.featured, order: row.order, published: row.published,
     });
     setEditingId(row.id);
@@ -169,7 +178,7 @@ export default function AdminPortfolioPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-5">
           <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-surface p-6 shadow-lg">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-ink">{editingId ? "Edit project" : "New project"}</h2>
@@ -185,6 +194,10 @@ export default function AdminPortfolioPage() {
               <Field label="Solution (optional)"><textarea rows={2} value={form.solution} onChange={(e) => setForm({ ...form, solution: e.target.value })} className="input" /></Field>
               <Field label="Results achieved (optional)"><textarea rows={2} value={form.results} onChange={(e) => setForm({ ...form, results: e.target.value })} className="input" /></Field>
               <Field label="Technologies (comma-separated)"><input value={form.technologies} onChange={(e) => setForm({ ...form, technologies: e.target.value })} className="input" /></Field>
+              <ImageUpload label="Cover image" value={form.coverImage} onChange={(url) => setForm({ ...form, coverImage: url })} />
+              <MultiImageUpload label="Gallery images (optional)" values={form.gallery} onChange={(urls) => setForm({ ...form, gallery: urls })} />
+              <ImageUpload label="Before image (optional — for before/after case studies)" value={form.beforeImage} onChange={(url) => setForm({ ...form, beforeImage: url })} />
+              <ImageUpload label="After image (optional — for before/after case studies)" value={form.afterImage} onChange={(url) => setForm({ ...form, afterImage: url })} />
               <div className="flex items-center gap-6">
                 <Field label="Order"><input type="number" value={form.order} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} className="input w-24" /></Field>
                 <label className="mt-6 flex items-center gap-2 text-sm text-ink">

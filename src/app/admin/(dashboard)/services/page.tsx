@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { Pencil, Trash2, Plus, X, Code2, Atom, LayoutTemplate, Smartphone, PenTool, Sparkles } from "lucide-react";
+
+const iconOptions = [
+  { key: "code-2", label: "Code", Icon: Code2 },
+  { key: "atom", label: "Atom (AI)", Icon: Atom },
+  { key: "layout-template", label: "Layout (Web)", Icon: LayoutTemplate },
+  { key: "smartphone", label: "Smartphone", Icon: Smartphone },
+  { key: "pen-tool", label: "Pen (Design)", Icon: PenTool },
+  { key: "sparkles", label: "Sparkles (Custom)", Icon: Sparkles },
+];
 
 interface ServiceRow {
   id: string;
@@ -12,6 +21,7 @@ interface ServiceRow {
   benefits: string[];
   process: string[];
   technologies: string[];
+  icon: string;
   order: number;
   published: boolean;
 }
@@ -24,6 +34,7 @@ const emptyForm = {
   benefits: "",
   process: "",
   technologies: "",
+  icon: "sparkles",
   order: 0,
   published: true,
 };
@@ -63,6 +74,7 @@ export default function AdminServicesPage() {
       benefits: service.benefits.join("\n"),
       process: service.process.join("\n"),
       technologies: service.technologies.join(", "),
+      icon: service.icon || "sparkles",
       order: service.order,
       published: service.published,
     });
@@ -82,6 +94,7 @@ export default function AdminServicesPage() {
       benefits: form.benefits.split("\n").map((s) => s.trim()).filter(Boolean),
       process: form.process.split("\n").map((s) => s.trim()).filter(Boolean),
       technologies: form.technologies.split(",").map((s) => s.trim()).filter(Boolean),
+      icon: form.icon,
       order: Number(form.order),
       published: form.published,
     };
@@ -196,7 +209,7 @@ export default function AdminServicesPage() {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-5">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-5">
           <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-surface p-6 shadow-lg">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-ink">
@@ -228,6 +241,24 @@ export default function AdminServicesPage() {
               <Field label="Technologies (comma-separated)">
                 <input value={form.technologies} onChange={(e) => setForm({ ...form, technologies: e.target.value })} className="input" />
               </Field>
+              <div>
+                <span className="mb-1.5 block text-sm font-medium text-ink">Icon</span>
+                <div className="grid grid-cols-6 gap-2">
+                  {iconOptions.map(({ key, label, Icon }) => (
+                    <button
+                      key={key}
+                      type="button"
+                      title={label}
+                      onClick={() => setForm({ ...form, icon: key })}
+                      className={`flex items-center justify-center rounded-md border p-3 transition-colors ${
+                        form.icon === key ? "border-brand bg-brand-light text-brand" : "border-themed text-ink-soft hover:border-brand"
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="flex items-center gap-3">
                 <Field label="Order">
                   <input

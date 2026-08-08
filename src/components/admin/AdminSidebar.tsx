@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { LayoutDashboard, Layers, Package, FolderKanban, Users, FileText, Mail, Send, LogOut, ExternalLink } from "lucide-react";
-import { OrbitMark } from "@/components/ui/OrbitMark";
+import { LayoutDashboard, Layers, Package, FolderKanban, Users, FileText, Mail, Send, LogOut, ExternalLink, Quote, Briefcase, Settings } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -13,9 +13,12 @@ const links = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/portfolio", label: "Portfolio", icon: FolderKanban },
   { href: "/admin/team", label: "Team", icon: Users },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
+  { href: "/admin/careers", label: "Careers", icon: Briefcase },
   { href: "/admin/blog", label: "Blog", icon: FileText },
   { href: "/admin/contact-submissions", label: "Contact submissions", icon: Mail },
   { href: "/admin/newsletter", label: "Newsletter", icon: Send },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -25,7 +28,7 @@ export function AdminSidebar() {
   return (
     <aside className="flex w-64 flex-none flex-col border-r border-themed bg-surface p-5">
       <Link href="/admin" className="mb-8 flex items-center gap-2.5 px-1 font-display text-base font-bold text-ink">
-        <OrbitMark size={26} />
+        <Logo size={26} />
         Nucleus Admin
       </Link>
 

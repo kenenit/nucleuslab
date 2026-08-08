@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Menu, X, Moon, Sun, ArrowRight } from "lucide-react";
-import { OrbitMark } from "@/components/ui/OrbitMark";
+import { Logo } from "@/components/ui/Logo";
 import { serviceLinks, productLinks, aboutLinks } from "@/data/nav";
 import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
@@ -58,7 +58,7 @@ export function Header() {
             scrolled ? "text-ink" : "text-[#EAF0FF]"
           )}
         >
-          <OrbitMark size={30} />
+          <Logo size={30} variant={scrolled ? "auto" : "white"} />
           Nucleus Labs
         </Link>
 

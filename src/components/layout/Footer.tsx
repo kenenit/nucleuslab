@@ -2,10 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Linkedin, Twitter, Instagram, Facebook, Youtube } from "lucide-react";
-import { OrbitMark } from "@/components/ui/OrbitMark";
+import { Linkedin, Twitter, Instagram, Facebook, Youtube, Github } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 import { footerServiceLinks, footerProductLinks, footerCompanyLinks, footerResourceLinks } from "@/data/nav";
-import { socialLinks } from "@/data/social";
+
+export interface FooterSocialLinks {
+  linkedin: string;
+  twitter: string;
+  instagram: string;
+  facebook: string;
+  tiktok: string;
+  youtube: string;
+  github: string;
+}
 
 const socialIcons = [
   { key: "linkedin", label: "LinkedIn", Icon: Linkedin },
@@ -13,9 +22,10 @@ const socialIcons = [
   { key: "instagram", label: "Instagram", Icon: Instagram },
   { key: "facebook", label: "Facebook", Icon: Facebook },
   { key: "youtube", label: "YouTube", Icon: Youtube },
+  { key: "github", label: "GitHub", Icon: Github },
 ] as const;
 
-export function Footer() {
+export function Footer({ social }: { social: FooterSocialLinks }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   async function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
@@ -43,7 +53,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-10 pb-14 md:grid-cols-6">
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 font-display text-lg font-bold text-ink">
-              <OrbitMark size={28} />
+              <Logo size={28} />
               Nucleus Labs
             </Link>
             <p className="mt-4 max-w-[280px] text-sm text-ink-soft">
@@ -51,11 +61,11 @@ export function Footer() {
             </p>
             <div className="mt-5 flex gap-2.5">
               {socialIcons
-                .filter(({ key }) => socialLinks[key])
+                .filter(({ key }) => social[key])
                 .map(({ key, label, Icon }) => (
                   <a
                     key={key}
-                    href={socialLinks[key]}
+                    href={social[key]}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
