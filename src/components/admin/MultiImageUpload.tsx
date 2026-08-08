@@ -55,7 +55,7 @@ export function MultiImageUpload({
       <span className="mb-1.5 block text-sm font-medium text-ink">{label}</span>
 
       {values.length > 0 && (
-        <div className="mb-3 grid grid-cols-4 gap-2">
+        <div className="mb-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
           {values.map((url, i) => (
             <div key={`${url}-${i}`} className="group relative aspect-square overflow-hidden rounded-md border border-themed">
               {/* eslint-disable-next-line @next/next/no-img-element */}

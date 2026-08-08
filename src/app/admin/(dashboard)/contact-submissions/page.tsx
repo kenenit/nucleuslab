@@ -13,8 +13,8 @@ export default async function ContactSubmissionsPage() {
       <h1 className="mb-1 font-display text-2xl font-semibold text-ink">Contact submissions</h1>
       <p className="mb-8 text-sm text-ink-soft">Messages sent through the site's contact form.</p>
 
-      <div className="overflow-hidden rounded-lg border border-themed bg-surface">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-lg border border-themed bg-surface">
+        <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-themed bg-surface-2 text-ink-soft">
             <tr>
               <th className="px-5 py-3 font-medium">Name</th>

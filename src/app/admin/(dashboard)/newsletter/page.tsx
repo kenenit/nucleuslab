@@ -11,7 +11,7 @@ export default async function NewsletterPage() {
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="mb-1 font-display text-2xl font-semibold text-ink">Newsletter</h1>
           <p className="text-sm text-ink-soft">{activeCount} active subscriber{activeCount === 1 ? "" : "s"}.</p>
@@ -24,8 +24,8 @@ export default async function NewsletterPage() {
         </a>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-themed bg-surface">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-lg border border-themed bg-surface">
+        <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-themed bg-surface-2 text-ink-soft">
             <tr>
               <th className="px-5 py-3 font-medium">Email</th>
