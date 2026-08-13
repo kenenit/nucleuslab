@@ -188,7 +188,6 @@ export default function AboutPage() {
           <h2 className="mt-4 font-display text-[1.9rem] font-semibold tracking-[-0.02em] text-ink md:text-[2.75rem]">
             Still early — moving with intent.
           </h2>
-          <p className="mt-3 text-ink-soft">Placeholder milestones — replace with the real founding history and dates.</p>
         </Reveal>
         <div className="relative pl-14">
           <div className="absolute bottom-1.5 left-5 top-1.5 w-px bg-themed" />
@@ -213,7 +212,6 @@ export default function AboutPage() {
             <h2 className="mt-4 font-display text-[1.9rem] font-semibold tracking-[-0.02em] text-ink md:text-[2.75rem]">
               How we work, day to day.
             </h2>
-            <p className="mt-3 text-ink-soft">Placeholder — replace with what actually makes working at Nucleus Labs distinct.</p>
           </Reveal>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {cultureItems.map((item, i) => (
@@ -224,9 +222,6 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
-          <Reveal className="mt-6 flex items-center gap-2.5 font-mono text-[.8125rem] text-ink-soft">
-            Team photos coming soon — this section is ready for real photography.
-          </Reveal>
         </div>
       </section>
 

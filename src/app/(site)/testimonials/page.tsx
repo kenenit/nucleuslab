@@ -14,8 +14,8 @@ export const metadata = buildMetadata({
 export const revalidate = 60;
 
 export default async function TestimonialsPage() {
-  const { items, usingPlaceholders } = await getTestimonials();
-  const average = items.length > 0 ? (items.reduce((sum, t) => sum + t.rating, 0) / items.length).toFixed(1) : "—";
+  const { items } = await getTestimonials();
+  const average = items.length > 0 ? (items.reduce((sum, t) => sum + t.rating, 0) / items.length).toFixed(1) : null;
 
   return (
     <>
@@ -23,16 +23,16 @@ export default async function TestimonialsPage() {
         eyebrow="CLIENT REVIEWS"
         title="What clients say."
         description={
-          usingPlaceholders
-            ? `An average rating of ${average} out of 5 across our engagements so far — placeholder reviews, ready to swap for the real thing.`
-            : `An average rating of ${average} out of 5 across our engagements so far.`
+          average
+            ? `An average rating of ${average} out of 5 across our engagements so far.`
+            : "What working with Nucleus Labs is actually like, in our clients' own words."
         }
         crumbLabel="Testimonials"
       />
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         {items.length === 0 ? (
           <div className="rounded-lg border border-dashed border-themed bg-surface-2 p-10 text-center">
-            <p className="text-sm text-ink-soft">No testimonials yet — add some from the admin dashboard.</p>
+            <p className="text-sm text-ink-soft">Client reviews will appear here as engagements are completed.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">

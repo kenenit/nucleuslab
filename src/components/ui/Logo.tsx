@@ -22,8 +22,13 @@ interface LogoProps {
  * site's light/dark mode setting.
  */
 export function Logo({ size = 30, variant = "auto", className }: LogoProps) {
-  const { theme } = useTheme();
-  const resolved = variant === "auto" ? (theme === "dark" ? "white" : "dark") : variant;
+  const { theme, mounted } = useTheme();
+  // Match SSR's assumed default ("light") until the client has confirmed the
+  // real theme post-mount — avoids a hydration mismatch. The header's own
+  // logo usage is unaffected (it forces variant="white" while unscrolled,
+  // matching SSR either way); this only matters for auto-variant usages
+  // like the footer, admin sidebar, and admin login screen.
+  const resolved = variant === "auto" ? (mounted && theme === "dark" ? "white" : "dark") : variant;
 
   return (
     <Image
@@ -32,6 +37,7 @@ export function Logo({ size = 30, variant = "auto", className }: LogoProps) {
       alt="Nucleus Labs"
       width={size}
       height={size}
+      style={{ width: size, height: size }}
       className={className}
       priority
     />

@@ -99,7 +99,7 @@ export function PortfolioGrid({ projects }: { projects: CaseStudyDisplay[] }) {
                 )}
 
                 <Link href="/products" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                  View related product
+                  View details
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -107,10 +107,6 @@ export function PortfolioGrid({ projects }: { projects: CaseStudyDisplay[] }) {
           );
         })}
       </div>
-
-      <Reveal className="mt-10 rounded-lg bg-surface-2 p-6 text-center text-sm text-ink-soft">
-        Manage these case studies from the admin dashboard — new ones you add there show up here automatically.
-      </Reveal>
     </>
   );
 }

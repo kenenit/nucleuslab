@@ -4,7 +4,6 @@ import { services as staticServices } from "@/data/services";
 import { products as staticProducts } from "@/data/products";
 import { caseStudies as staticCaseStudies } from "@/data/case-studies";
 import { blogPosts as staticBlogPosts } from "@/data/blog-posts";
-import { testimonials as staticTestimonials } from "@/data/testimonials";
 import { jobs as staticJobs } from "@/data/jobs";
 import type { ServiceContent } from "@/types";
 
@@ -235,26 +234,14 @@ function initialsOf(name: string) {
     .toUpperCase();
 }
 
-// Returns { items, usingPlaceholders } so pages can show the "placeholder —
-// add real ones in the admin dashboard" note only when it's actually true.
+// Real testimonials only — no fake/placeholder reviews are ever shown to
+// site visitors. usingPlaceholders is kept in the return shape for any
+// caller that wants to adjust copy, but it's now always false.
 export async function getTestimonials(): Promise<{ items: TestimonialDisplay[]; usingPlaceholders: boolean }> {
   try {
     const rows = await withRetry(() =>
       prisma.testimonial.findMany({ where: { published: true }, orderBy: { order: "asc" } })
     );
-    if (rows.length === 0) {
-      return {
-        usingPlaceholders: true,
-        items: staticTestimonials.map((t, i) => ({
-          id: `ph-${i}`,
-          quote: t.quote,
-          name: t.name,
-          role: t.role,
-          initials: t.initials,
-          rating: t.rating,
-        })),
-      };
-    }
     return {
       usingPlaceholders: false,
       items: rows.map((r) => ({
@@ -267,18 +254,8 @@ export async function getTestimonials(): Promise<{ items: TestimonialDisplay[]; 
       })),
     };
   } catch (err) {
-    console.error("[content] getTestimonials falling back to static data", err);
-    return {
-      usingPlaceholders: true,
-      items: staticTestimonials.map((t, i) => ({
-        id: `ph-${i}`,
-        quote: t.quote,
-        name: t.name,
-        role: t.role,
-        initials: t.initials,
-        rating: t.rating,
-      })),
-    };
+    console.error("[content] getTestimonials — database unavailable, showing none", err);
+    return { usingPlaceholders: false, items: [] };
   }
 }
 

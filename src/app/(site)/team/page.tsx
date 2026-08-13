@@ -106,10 +106,7 @@ export default async function TeamPage() {
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         {members.length === 0 ? (
           <div className="rounded-lg border border-dashed border-themed bg-surface-2 p-10 text-center">
-            <p className="text-sm text-ink-soft">
-              Team members haven&apos;t been added yet — add leadership and team profiles from the admin dashboard
-              and they&apos;ll appear here.
-            </p>
+            <p className="text-sm text-ink-soft">Team profiles are on their way — check back soon.</p>
           </div>
         ) : (
           <>

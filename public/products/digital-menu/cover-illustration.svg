@@ -1,0 +1,106 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#04060F"/>
+      <stop offset="38%" stop-color="#080D22"/>
+      <stop offset="72%" stop-color="#0E1C48"/>
+      <stop offset="100%" stop-color="#12275C"/>
+    </linearGradient>
+    <linearGradient id="phoneScreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F1A3D"/>
+      <stop offset="100%" stop-color="#0A1230"/>
+    </linearGradient>
+    <linearGradient id="qrGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2FD5C8"/>
+      <stop offset="100%" stop-color="#1552F0"/>
+    </linearGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M 42 0 L 0 0 0 42" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+
+  <!-- soft glow behind phone -->
+  <ellipse cx="430" cy="300" rx="260" ry="230" fill="#1552F0" opacity="0.12"/>
+
+  <!-- QR code card, upper-left -->
+  <g transform="translate(90,120)">
+    <rect width="190" height="190" rx="20" fill="#FFFFFF" opacity="0.04"/>
+    <rect x="14" y="14" width="162" height="162" rx="12" fill="#FFFFFF"/>
+    <!-- simplified QR pattern -->
+    <g fill="#0A1230">
+      <rect x="30" y="30" width="34" height="34" rx="4"/>
+      <rect x="126" y="30" width="34" height="34" rx="4"/>
+      <rect x="30" y="126" width="34" height="34" rx="4"/>
+      <rect x="40" y="40" width="14" height="14" fill="#FFFFFF"/>
+      <rect x="136" y="40" width="14" height="14" fill="#FFFFFF"/>
+      <rect x="40" y="136" width="14" height="14" fill="#FFFFFF"/>
+      <rect x="78" y="30" width="10" height="10"/>
+      <rect x="96" y="30" width="10" height="10"/>
+      <rect x="78" y="48" width="10" height="10"/>
+      <rect x="108" y="60" width="10" height="10"/>
+      <rect x="78" y="78" width="10" height="10"/>
+      <rect x="96" y="78" width="10" height="10"/>
+      <rect x="114" y="78" width="10" height="10"/>
+      <rect x="78" y="96" width="10" height="10"/>
+      <rect x="132" y="96" width="10" height="10"/>
+      <rect x="96" y="108" width="10" height="10"/>
+      <rect x="78" y="120" width="10" height="10"/>
+      <rect x="108" y="132" width="10" height="10"/>
+      <rect x="126" y="132" width="10" height="10"/>
+      <rect x="144" y="114" width="10" height="10"/>
+      <rect x="96" y="144" width="10" height="10"/>
+      <rect x="126" y="150" width="10" height="10"/>
+      <rect x="144" y="144" width="10" height="10"/>
+    </g>
+  </g>
+  <text x="122" y="345" font-family="IBM Plex Mono, monospace" font-size="15" letter-spacing="2" fill="#2FD5C8">SCAN TO VIEW MENU</text>
+
+  <!-- phone mockup, right side -->
+  <g transform="translate(420,70)">
+    <rect x="0" y="0" width="230" height="460" rx="34" fill="#050814" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
+    <rect x="10" y="10" width="210" height="440" rx="26" fill="url(#phoneScreen)"/>
+
+    <!-- status notch -->
+    <rect x="88" y="18" width="54" height="14" rx="7" fill="#050814"/>
+
+    <!-- header -->
+    <text x="30" y="66" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="700" fill="#F4EFE3">Digital Menu</text>
+    <rect x="30" y="82" width="170" height="1" fill="rgba(255,255,255,.1)"/>
+
+    <!-- menu rows -->
+    <g font-family="Inter, sans-serif">
+      <rect x="30" y="102" width="170" height="66" rx="12" fill="rgba(255,255,255,.045)"/>
+      <rect x="42" y="114" width="42" height="42" rx="8" fill="#D4A96A" opacity="0.85"/>
+      <text x="96" y="130" font-size="13.5" font-weight="600" fill="#F4EFE3">Doro Wat</text>
+      <text x="96" y="150" font-size="11.5" fill="#8792AE">Slow-braised, berbere</text>
+
+      <rect x="30" y="180" width="170" height="66" rx="12" fill="rgba(255,255,255,.045)"/>
+      <rect x="42" y="192" width="42" height="42" rx="8" fill="#7FB8E0" opacity="0.85"/>
+      <text x="96" y="208" font-size="13.5" font-weight="600" fill="#F4EFE3">Tibs Platter</text>
+      <text x="96" y="228" font-size="11.5" fill="#8792AE">Grilled, with injera</text>
+
+      <rect x="30" y="258" width="170" height="66" rx="12" fill="rgba(255,255,255,.045)"/>
+      <rect x="42" y="270" width="42" height="42" rx="8" fill="#2FD5C8" opacity="0.7"/>
+      <text x="96" y="286" font-size="13.5" font-weight="600" fill="#F4EFE3">Fresh Juice</text>
+      <text x="96" y="306" font-size="11.5" fill="#8792AE">Avocado, mango</text>
+    </g>
+
+    <!-- CTA -->
+    <rect x="30" y="342" width="170" height="46" rx="23" fill="#1552F0"/>
+    <text x="115" y="370" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Place Order</text>
+
+    <!-- home indicator -->
+    <rect x="90" y="432" width="50" height="4" rx="2" fill="rgba(255,255,255,.25)"/>
+  </g>
+
+  <!-- connecting dashed line, QR -> phone -->
+  <path d="M 285 210 C 340 190, 360 190, 415 200" fill="none" stroke="url(#qrGlow)" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- floating accent dots, matches Hero's decorative style -->
+  <circle cx="700" cy="120" r="5" fill="#2FD5C8"/>
+  <circle cx="740" cy="480" r="4" fill="#1552F0"/>
+  <circle cx="80" cy="480" r="4" fill="#2FD5C8" opacity="0.6"/>
+</svg>

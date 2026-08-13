@@ -35,7 +35,7 @@ export default async function CareersPage() {
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         {jobs.length === 0 ? (
           <div className="rounded-lg border border-dashed border-themed bg-surface-2 p-10 text-center">
-            <p className="text-sm text-ink-soft">No open roles right now — check back soon, or add listings from the admin dashboard.</p>
+            <p className="text-sm text-ink-soft">No open roles right now — check back soon.</p>
           </div>
         ) : (
           <div className="flex flex-col gap-4">

@@ -14,12 +14,11 @@ export default function TermsPage() {
       <PageHero
         eyebrow="LEGAL"
         title="Terms & Conditions"
-        description="Placeholder terms — replace with counsel-reviewed terms before this site is deployed publicly."
         crumbLabel="Terms & Conditions"
       />
       <section className="mx-auto max-w-[760px] px-5 py-16 md:px-10 md:py-24">
         <div className="flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
-          <p className="text-xs font-mono text-ink-soft">Last updated: [date] — placeholder content, not legal advice.</p>
+          <p className="text-xs font-mono text-ink-soft">Last updated: August 13, 2026</p>
 
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Acceptance of terms</h2>

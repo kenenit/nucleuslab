@@ -13,7 +13,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, mounted } = useTheme();
 
   useEffect(() => {
     function updateHeaderState() {
@@ -136,7 +136,7 @@ export function Header() {
               scrolled ? "border-themed text-ink" : "border-white/30 text-[#EAF0FF]"
             )}
           >
-            {theme === "dark" ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
+            {mounted && theme === "dark" ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
           </button>
           <button
             aria-label="Open menu"

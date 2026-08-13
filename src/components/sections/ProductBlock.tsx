@@ -99,13 +99,13 @@ export function ProductBlock({ product, reverse = false, isLast = false }: { pro
             ? screenshots.slice(0, 4).map((src, i) => (
                 <div
                   key={src}
-                  className="relative flex h-[220px] items-center justify-center overflow-hidden rounded-lg border border-themed bg-surface-2 shadow-sm sm:h-[260px]"
+                  className="relative flex h-[220px] items-center justify-center overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg sm:h-[260px]"
                 >
                   <Image
                     src={src}
                     alt={`${product.name} screenshot ${i + 1}`}
                     fill
-                    className="object-contain p-2"
+                    className="object-cover"
                   />
                 </div>
               ))

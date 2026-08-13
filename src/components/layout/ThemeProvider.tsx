@@ -7,6 +7,11 @@ type Theme = "light" | "dark";
 interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
+  // False until the client has hydrated and confirmed the real theme.
+  // Components that render different markup per-theme (icons, etc.)
+  // should gate on this to avoid a server/client hydration mismatch —
+  // SSR always assumes "light" since it can't know a saved preference.
+  mounted: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -23,6 +28,7 @@ function getInitialTheme(): Theme {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("nucleus-theme") as Theme | null;
@@ -30,6 +36,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const initial = stored ?? (prefersDark ? "dark" : "light");
     setTheme(initial);
     document.documentElement.classList.toggle("dark", initial === "dark");
+    setMounted(true);
   }, []);
 
   const toggleTheme = () => {
@@ -41,7 +48,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={{ theme, toggleTheme, mounted }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {
