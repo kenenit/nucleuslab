@@ -1,59 +1,73 @@
+import { Star } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
+import { ContactCta } from "@/components/sections/ContactCta";
+import { Reveal } from "@/components/ui/Reveal";
+import { getTestimonials } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Privacy Policy",
-  description: "How Nucleus Labs collects, uses, and protects your information.",
-  path: "/privacy",
-  noIndex: true,
+  title: "Testimonials",
+  description: "What clients say about working with Nucleus Labs.",
+  path: "/testimonials",
 });
 
-export default function PrivacyPage() {
+export const revalidate = 60;
+
+export default async function TestimonialsPage() {
+  const { items } = await getTestimonials();
+  const average = items.length > 0 ? (items.reduce((sum, t) => sum + t.rating, 0) / items.length).toFixed(1) : null;
+
   return (
     <>
       <PageHero
-        eyebrow="LEGAL"
-        title="Privacy Policy"
-        crumbLabel="Privacy Policy"
+        eyebrow="CLIENT REVIEWS"
+        title="What clients say."
+        description={
+          average
+            ? `An average rating of ${average} out of 5 across our engagements so far.`
+            : "What working with Nucleus Labs is actually like, in our clients' own words."
+        }
+        crumbLabel="Testimonials"
       />
-      <section className="mx-auto max-w-[760px] px-5 py-16 md:px-10 md:py-24">
-        <div className="flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
-          <p className="text-xs font-mono text-ink-soft">Last updated: August 13, 2026</p>
-
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Information we collect</h2>
-            <p>
-              When you use our contact form, newsletter signup, or job application form, we collect the information
-              you provide directly — such as your name, email, phone number, and message content.
+      <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
+        {items.length === 0 ? (
+          <div className="rounded-lg border border-themed bg-surface-2 p-10 text-center">
+            <p className="text-sm text-ink-soft">
+              We&apos;re a young studio and still early in collecting reviews from clients. Reach out and we&apos;ll
+              happily connect you with references from current work.
             </p>
           </div>
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">2. How we use it</h2>
-            <p>
-              We use this information to respond to inquiries, send newsletter updates (only if you subscribed),
-              and evaluate job applications. We do not sell personal information to third parties.
-            </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            {items.map((t, i) => (
+              <Reveal
+                key={t.id}
+                delayMs={i * 60}
+                className="flex min-h-[260px] flex-col justify-between rounded-lg border border-themed bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div>
+                  <div className="mb-4 flex gap-0.5 text-accent">
+                    {Array.from({ length: t.rating }).map((_, idx) => (
+                      <Star key={idx} className="h-3.5 w-3.5 fill-accent" />
+                    ))}
+                  </div>
+                  <p className="leading-relaxed text-ink">{t.quote}</p>
+                </div>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="flex h-[42px] w-[42px] flex-none items-center justify-center rounded-full bg-brand-light font-display text-sm font-semibold text-brand">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-ink">{t.name}</div>
+                    <div className="text-[13px] text-ink-soft">{t.role}</div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">3. Data storage</h2>
-            <p>
-              Submitted information is stored in our database and retained only as long as necessary for the
-              purpose it was collected for.
-            </p>
-          </div>
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">4. Your rights</h2>
-            <p>
-              You may request access to, correction of, or deletion of your personal information at any time by
-              contacting us.
-            </p>
-          </div>
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">5. Contact</h2>
-            <p>Questions about this policy can be sent to NucleusLabs.et@gmail.com.</p>
-          </div>
-        </div>
+        )}
       </section>
+      <ContactCta />
     </>
   );
 }

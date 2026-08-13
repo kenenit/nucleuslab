@@ -2,52 +2,56 @@ import { PageHero } from "@/components/sections/PageHero";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Terms & Conditions",
-  description: "Terms governing use of the Nucleus Labs website and services.",
-  path: "/terms",
+  title: "Privacy Policy",
+  description: "How Nucleus Labs collects, uses, and protects your information.",
+  path: "/privacy",
   noIndex: true,
 });
 
-export default function TermsPage() {
+export default function PrivacyPage() {
   return (
     <>
       <PageHero
         eyebrow="LEGAL"
-        title="Terms & Conditions"
-        crumbLabel="Terms & Conditions"
+        title="Privacy Policy"
+        description="How Nucleus Labs collects, uses, and protects your information."
+        crumbLabel="Privacy Policy"
       />
       <section className="mx-auto max-w-[760px] px-5 py-16 md:px-10 md:py-24">
         <div className="flex flex-col gap-8 text-sm leading-relaxed text-ink-soft">
           <p className="text-xs font-mono text-ink-soft">Last updated: August 13, 2026</p>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Acceptance of terms</h2>
-            <p>By using this website, you agree to these terms. If you don&apos;t agree, please don&apos;t use the site.</p>
-          </div>
-          <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">2. Services</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-ink">1. Information we collect</h2>
             <p>
-              Nucleus Labs provides software development, AI solutions, and related digital services as described
-              on this site. Specific project terms are governed by individual service agreements, not this page.
+              When you use our contact form, newsletter signup, or job application form, we collect the information
+              you provide directly — such as your name, email, phone number, and message content.
             </p>
           </div>
           <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">3. Intellectual property</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-ink">2. How we use it</h2>
             <p>
-              Content on this site — text, graphics, logos — is owned by Nucleus Labs unless otherwise noted, and
-              may not be reproduced without permission.
+              We use this information to respond to inquiries, send newsletter updates (only if you subscribed),
+              and evaluate job applications. We do not sell personal information to third parties.
             </p>
           </div>
           <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">4. Limitation of liability</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-ink">3. Data storage</h2>
             <p>
-              This website is provided &quot;as is&quot; without warranties of any kind. Nucleus Labs is not liable
-              for damages arising from use of this site.
+              Submitted information is stored in our database and retained only as long as necessary for the
+              purpose it was collected for.
             </p>
           </div>
           <div>
-            <h2 className="mb-2 font-display text-lg font-semibold text-ink">5. Changes</h2>
-            <p>We may update these terms from time to time; continued use of the site means you accept the changes.</p>
+            <h2 className="mb-2 font-display text-lg font-semibold text-ink">4. Your rights</h2>
+            <p>
+              You may request access to, correction of, or deletion of your personal information at any time by
+              contacting us.
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-2 font-display text-lg font-semibold text-ink">5. Contact</h2>
+            <p>Questions about this policy can be sent to NucleusLabs.et@gmail.com.</p>
           </div>
         </div>
       </section>
