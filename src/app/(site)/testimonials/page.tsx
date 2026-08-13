@@ -31,8 +31,11 @@ export default async function TestimonialsPage() {
       />
       <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         {items.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-themed bg-surface-2 p-10 text-center">
-            <p className="text-sm text-ink-soft">Client reviews will appear here as engagements are completed.</p>
+          <div className="rounded-lg border border-themed bg-surface-2 p-10 text-center">
+            <p className="text-sm text-ink-soft">
+              We&apos;re a young studio and still early in collecting reviews from clients. Reach out and we&apos;ll
+              happily connect you with references from current work.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
