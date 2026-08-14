@@ -38,7 +38,7 @@ export function WhyChooseUs() {
 
           <Reveal delayMs={140} className="mx-auto w-full max-w-[440px]">
             <div
-              className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-themed bg-surface shadow-lg"
+              className="relative flex aspect-square w-full items-center justify-center overflow-hidden"
               aria-label="Nucleus Labs engineering blueprint visualization"
             >
               <div
@@ -64,10 +64,6 @@ export function WhyChooseUs() {
                   </span>
                 </div>
 
-                <div className="absolute right-[-2%] top-[-3%] flex items-center rounded-full border border-themed bg-surface/95 p-1 font-mono text-[10px] backdrop-blur">
-                  <span className="rounded-full bg-ink px-4 py-2 text-surface">Nucleus</span>
-                  <span className="px-3 py-2 text-ink-soft">Blueprint</span>
-                </div>
               </div>
             </div>
           </Reveal>
