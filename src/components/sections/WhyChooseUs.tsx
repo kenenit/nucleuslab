@@ -10,7 +10,7 @@ const reasons = [
 export function WhyChooseUs() {
   return (
     <section className="bg-surface-2 py-16 md:py-28">
-      <div className="mx-auto grid max-w-[1280px] items-start gap-14 px-5 md:grid-cols-2 md:px-10 md:gap-24">
+      <div className="mx-auto max-w-[720px] px-5 md:px-10">
         <div>
           <Reveal>
             <span className="font-mono text-xs uppercase tracking-[.14em] text-brand">WHY NUCLEUS LABS</span>
@@ -34,18 +34,6 @@ export function WhyChooseUs() {
             ))}
           </div>
         </div>
-
-        <Reveal className="aspect-[4/5] overflow-hidden rounded-lg border border-themed bg-surface shadow-md">
-          <svg viewBox="0 0 400 500" width="100%" height="100%" aria-hidden="true">
-            <rect width="400" height="500" fill="var(--surface-2)" />
-            <ellipse cx="200" cy="250" rx="140" ry="60" transform="rotate(25 200 250)" fill="none" stroke="var(--border)" strokeWidth="1.5" />
-            <ellipse cx="200" cy="250" rx="140" ry="60" transform="rotate(-25 200 250)" fill="none" stroke="var(--border)" strokeWidth="1.5" />
-            <circle cx="200" cy="250" r="30" fill="#1552F0" />
-            <circle cx="320" cy="200" r="5" fill="#2FD5C8" />
-            <circle cx="90" cy="310" r="5" fill="#1552F0" />
-            <circle cx="250" cy="360" r="4" fill="#2FD5C8" />
-          </svg>
-        </Reveal>
       </div>
     </section>
   );

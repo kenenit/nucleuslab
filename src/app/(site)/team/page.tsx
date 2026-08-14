@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { Github, Globe, Linkedin, Mail, Phone } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactCta } from "@/components/sections/ContactCta";
@@ -90,7 +91,16 @@ function PersonCard({ name, role, photoUrl, linkedinUrl, githubUrl, portfolioUrl
   );
 }
 
+// Team page is hidden for now (no profiles ready yet). Flip this back to
+// true — no other changes needed — to bring the page back, including its
+// nav entries in src/data/nav.ts.
+const TEAM_PAGE_ENABLED = false;
+
 export default async function TeamPage() {
+  if (!TEAM_PAGE_ENABLED) {
+    notFound();
+  }
+
   const members = await getTeamMembers();
   const leadership = members.filter((m) => m.isLeadership);
   const team = members.filter((m) => !m.isLeadership);

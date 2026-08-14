@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, Clock } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -19,7 +19,6 @@ export default async function ContactPage() {
   const details = [
     { icon: Mail, label: "Email", value: settings.contactEmail },
     { icon: Phone, label: "Phone", value: settings.contactPhone },
-    { icon: MapPin, label: "Office", value: settings.contactAddress },
     { icon: Clock, label: "Hours", value: settings.contactHours },
   ].filter((d) => d.value);
 
@@ -54,14 +53,6 @@ export default async function ContactPage() {
                   </div>
                 );
               })}
-            </div>
-
-            <div className="aspect-[4/3] overflow-hidden rounded-lg border border-themed bg-surface-2">
-              {/* Swap for a real embed once you have an office address, e.g.:
-                  <iframe src="https://www.google.com/maps/embed?..." className="h-full w-full" loading="lazy" /> */}
-              <div className="flex h-full w-full items-center justify-center text-sm text-ink-soft">
-                Google Map placeholder
-              </div>
             </div>
           </Reveal>
         </div>
