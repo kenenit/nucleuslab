@@ -37,32 +37,37 @@ export function WhyChooseUs() {
           </div>
 
           <Reveal delayMs={140} className="mx-auto w-full max-w-[440px]">
-            <div className="overflow-hidden rounded-lg border border-themed bg-surface shadow-lg">
-              <div className="flex items-center gap-1.5 border-b border-themed px-4 py-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-                <span className="ml-2 font-mono text-[11px] text-ink-soft">nucleus-labs — build log</span>
-              </div>
-              <div className="space-y-3 px-5 py-6 font-mono text-[13px] leading-relaxed">
-                <p className="text-ink-soft">
-                  <span className="text-brand">$</span> nucleus ship --project
-                </p>
-                {[
-                  "full lifecycle ownership: on",
-                  "ai-native architecture: on",
-                  "typed & documented: on",
-                  "status: visible to client",
-                ].map((line) => (
-                  <p key={line} className="flex items-center gap-2 text-ink">
-                    <span className="text-accent">✓</span>
-                    {line}
-                  </p>
-                ))}
-                <p className="flex items-center gap-1.5 pt-1 text-ink-soft">
-                  <span className="text-brand">$</span>
-                  <span className="inline-block h-[14px] w-[7px] animate-pulse bg-brand" aria-hidden="true" />
-                </p>
+            <div
+              className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-themed bg-surface shadow-lg"
+              aria-label="Nucleus Labs engineering blueprint visualization"
+            >
+              <div
+                className="absolute h-32 w-32 rounded-full bg-brand/10 blur-3xl"
+                aria-hidden="true"
+              />
+
+              <div className="relative h-[78%] w-[78%]">
+                <div className="absolute inset-[18%] rounded-full border border-themed" aria-hidden="true" />
+                <div className="absolute inset-[8%] rounded-full border border-themed" aria-hidden="true" />
+                <div className="absolute inset-0 rounded-full border border-themed" aria-hidden="true" />
+
+                <span className="absolute left-[22%] top-[4%] h-3 w-3 rounded-full bg-accent shadow-[0_0_16px_currentColor] animate-pulse" aria-hidden="true" />
+                <span className="absolute left-[29%] top-[70%] h-3 w-3 rounded-full bg-brand shadow-[0_0_16px_currentColor] animate-pulse" aria-hidden="true" />
+                <span className="absolute right-[7%] top-[49%] h-3 w-3 rounded-full bg-accent shadow-[0_0_16px_currentColor] animate-pulse" aria-hidden="true" />
+                <span className="absolute right-[0%] top-[61%] h-3 w-3 rounded-full bg-brand shadow-[0_0_16px_currentColor] animate-pulse" aria-hidden="true" />
+
+                <div className="absolute left-1/2 top-1/2 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-center shadow-[0_0_34px_rgba(37,99,235,0.28)]">
+                  <span className="font-mono text-[11px] font-semibold uppercase leading-tight text-white">
+                    Nucleus
+                    <br />
+                    Labs
+                  </span>
+                </div>
+
+                <div className="absolute right-[-2%] top-[-3%] flex items-center rounded-full border border-themed bg-surface/95 p-1 font-mono text-[10px] backdrop-blur">
+                  <span className="rounded-full bg-ink px-4 py-2 text-surface">Nucleus</span>
+                  <span className="px-3 py-2 text-ink-soft">Blueprint</span>
+                </div>
               </div>
             </div>
           </Reveal>
