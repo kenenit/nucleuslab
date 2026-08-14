@@ -99,7 +99,11 @@ export function Hero() {
           </div>
 
           <Reveal className="relative mx-auto aspect-square w-full max-w-[460px]">
-            <div className="absolute inset-[8%] rounded-[32px] border border-white/10 bg-white/[.035] shadow-[0_24px_60px_rgba(0,0,0,.35)] backdrop-blur-2xl" />
+            <div
+              className="absolute inset-[6%] rounded-full blur-[70px]"
+              style={{ background: "radial-gradient(circle,rgba(76,124,255,.28),transparent 72%)" }}
+              aria-hidden="true"
+            />
             <svg viewBox="0 0 400 400" className="relative z-10 h-full w-full">
               <defs>
                 <filter id="coreGlow" x="-100%" y="-100%" width="300%" height="300%">

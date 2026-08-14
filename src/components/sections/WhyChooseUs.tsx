@@ -10,8 +10,8 @@ const reasons = [
 export function WhyChooseUs() {
   return (
     <section className="bg-surface-2 py-16 md:py-28">
-      <div className="mx-auto max-w-[720px] px-5 md:px-10">
-        <div>
+      <div className="mx-auto max-w-[1280px] px-5 md:px-10">
+        <div className="max-w-[640px]">
           <Reveal>
             <span className="font-mono text-xs uppercase tracking-[.14em] text-brand">WHY NUCLEUS LABS</span>
           </Reveal>
