@@ -45,7 +45,7 @@ const socialIcons = [
 const defaultSocialLinks: FooterSocialLinks = {
   linkedin: "",
   twitter: "",
-  instagram: "https://www.instagram.com/nucleuslabs_et",
+  instagram: "https://www.instagram.com/nucleuslabs_et/",
   facebook: "https://www.facebook.com/nucleuslabs.et",
   tiktok: "https://www.tiktok.com/@nucleuslabs_et",
   telegram: "https://t.me/Nucleus_Labs",
