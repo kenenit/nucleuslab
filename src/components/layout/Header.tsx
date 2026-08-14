@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { ChevronDown, Menu, X, Moon, Sun, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
@@ -12,8 +13,13 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const { theme, toggleTheme, mounted } = useTheme();
+  const { theme, toggleTheme, mounted: themeMounted } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     function updateHeaderState() {
@@ -42,6 +48,7 @@ export function Header() {
   ];
 
   return (
+    <>
     <header
       ref={headerRef}
       className={cn(
@@ -136,7 +143,7 @@ export function Header() {
               scrolled ? "border-themed text-ink" : "border-white/30 text-[#EAF0FF]"
             )}
           >
-            {mounted && theme === "dark" ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
+            {themeMounted && theme === "dark" ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
           </button>
           <button
             aria-label="Open menu"
@@ -150,75 +157,84 @@ export function Header() {
           </button>
         </div>
       </div>
-
-      {/* Mobile off-canvas nav */}
-      <div
-        className={cn(
-          "fixed inset-0 z-[110] bg-surface transition-transform duration-300 lg:hidden",
-          mobileOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        <div className="flex h-[76px] items-center justify-between px-5">
-          <span className="font-display text-lg font-bold text-ink">Menu</span>
-          <button aria-label="Close menu" onClick={() => setMobileOpen(false)} className="text-ink">
-            <X className="h-6 w-6" />
-          </button>
-        </div>
-        <div className="flex flex-col gap-1 overflow-y-auto px-5 pb-8">
-          {megaMenus.map((menu) => (
-            <div key={menu.key} className="border-b border-themed">
-              <button
-                className="flex w-full items-center justify-between py-4 text-[15px] font-medium text-ink"
-                onClick={() => setOpenMobileSection((prev) => (prev === menu.key ? null : menu.key))}
-              >
-                {menu.label}
-                <ChevronDown
-                  className={cn(
-                    "h-4 w-4 transition-transform",
-                    openMobileSection === menu.key && "rotate-180"
-                  )}
-                />
-              </button>
-              {openMobileSection === menu.key && (
-                <div className="flex flex-col gap-1 pb-3">
-                  {menu.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="rounded-md p-2.5 text-sm text-ink-soft hover:bg-surface-2"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-          <Link
-            href="/portfolio"
-            onClick={() => setMobileOpen(false)}
-            className="border-b border-themed py-4 text-[15px] font-medium text-ink"
-          >
-            Portfolio
-          </Link>
-          <Link
-            href="/blog"
-            onClick={() => setMobileOpen(false)}
-            className="border-b border-themed py-4 text-[15px] font-medium text-ink"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/contact"
-            onClick={() => setMobileOpen(false)}
-            className="mt-5 inline-flex items-center justify-center gap-2 rounded-sm bg-brand px-6 py-3.5 text-[15px] font-semibold text-white"
-          >
-            Start a project
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </div>
     </header>
+
+    {/* Mobile off-canvas nav — portaled to <body> so it always covers the
+        full viewport, regardless of any backdrop-blur/transform on <header>
+        (those create a new containing block for position:fixed descendants,
+        which previously caused this panel to render only partway across
+        the screen once the header picked up backdrop-blur on scroll). */}
+    {mounted &&
+      createPortal(
+        <div
+          className={cn(
+            "fixed inset-0 z-[110] bg-surface transition-transform duration-300 lg:hidden",
+            mobileOpen ? "translate-x-0" : "translate-x-full"
+          )}
+        >
+          <div className="flex h-[76px] items-center justify-between px-5">
+            <span className="font-display text-lg font-bold text-ink">Menu</span>
+            <button aria-label="Close menu" onClick={() => setMobileOpen(false)} className="text-ink">
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <div className="flex flex-col gap-1 overflow-y-auto px-5 pb-8">
+            {megaMenus.map((menu) => (
+              <div key={menu.key} className="border-b border-themed">
+                <button
+                  className="flex w-full items-center justify-between py-4 text-[15px] font-medium text-ink"
+                  onClick={() => setOpenMobileSection((prev) => (prev === menu.key ? null : menu.key))}
+                >
+                  {menu.label}
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform",
+                      openMobileSection === menu.key && "rotate-180"
+                    )}
+                  />
+                </button>
+                {openMobileSection === menu.key && (
+                  <div className="flex flex-col gap-1 pb-3">
+                    {menu.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="rounded-md p-2.5 text-sm text-ink-soft hover:bg-surface-2"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <Link
+              href="/portfolio"
+              onClick={() => setMobileOpen(false)}
+              className="border-b border-themed py-4 text-[15px] font-medium text-ink"
+            >
+              Portfolio
+            </Link>
+            <Link
+              href="/blog"
+              onClick={() => setMobileOpen(false)}
+              className="border-b border-themed py-4 text-[15px] font-medium text-ink"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-sm bg-brand px-6 py-3.5 text-[15px] font-semibold text-white"
+            >
+              Start a project
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
   );
 }
