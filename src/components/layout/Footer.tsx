@@ -2,9 +2,23 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Linkedin, Twitter, Instagram, Facebook, Youtube, Github } from "lucide-react";
+import {
+  Linkedin,
+  Twitter,
+  Instagram,
+  Facebook,
+  Youtube,
+  Github,
+  Music2,
+  Send,
+} from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { footerServiceLinks, footerProductLinks, footerCompanyLinks, footerResourceLinks } from "@/data/nav";
+import {
+  footerServiceLinks,
+  footerProductLinks,
+  footerCompanyLinks,
+  footerResourceLinks,
+} from "@/data/nav";
 
 export interface FooterSocialLinks {
   linkedin: string;
@@ -14,6 +28,7 @@ export interface FooterSocialLinks {
   tiktok: string;
   youtube: string;
   github: string;
+  telegram: string;
 }
 
 const socialIcons = [
@@ -21,11 +36,31 @@ const socialIcons = [
   { key: "twitter", label: "Twitter / X", Icon: Twitter },
   { key: "instagram", label: "Instagram", Icon: Instagram },
   { key: "facebook", label: "Facebook", Icon: Facebook },
+  { key: "tiktok", label: "TikTok", Icon: Music2 },
+  { key: "telegram", label: "Telegram Support", Icon: Send },
   { key: "youtube", label: "YouTube", Icon: Youtube },
   { key: "github", label: "GitHub", Icon: Github },
 ] as const;
 
+const defaultSocialLinks: FooterSocialLinks = {
+  linkedin: "",
+  twitter: "",
+  instagram: "https://www.instagram.com/nucleuslabs_et",
+  facebook: "https://www.facebook.com/nucleuslabs.et",
+  tiktok: "https://www.tiktok.com/@nucleuslabs_et",
+  telegram: "https://t.me/Nucleus_Labs",
+  youtube: "",
+  github: "",
+};
+
 export function Footer({ social }: { social: FooterSocialLinks }) {
+  const socialLinks = {
+    ...defaultSocialLinks,
+    ...Object.fromEntries(
+      Object.entries(social).filter(([, value]) => Boolean(value))
+    ),
+  } as FooterSocialLinks;
+
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   async function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
@@ -52,23 +87,29 @@ export function Footer({ social }: { social: FooterSocialLinks }) {
       <div className="mx-auto max-w-[1280px] px-5 pt-20 md:px-10">
         <div className="grid grid-cols-2 gap-10 pb-14 md:grid-cols-6">
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 font-display text-lg font-bold text-ink">
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 font-display text-lg font-bold text-ink"
+            >
               <Logo size={28} />
               Nucleus Labs
             </Link>
+
             <p className="mt-4 max-w-[280px] text-sm text-ink-soft">
               Software, AI, and digital products engineered at the core of your business.
             </p>
-            <div className="mt-5 flex gap-2.5">
+
+            <div className="mt-5 flex flex-wrap gap-2.5">
               {socialIcons
-                .filter(({ key }) => social[key])
+                .filter(({ key }) => socialLinks[key])
                 .map(({ key, label, Icon }) => (
                   <a
                     key={key}
-                    href={social[key]}
+                    href={socialLinks[key]}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    title={label}
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-themed transition-colors hover:border-brand hover:bg-brand hover:text-white"
                   >
                     <Icon className="h-4 w-4" />
@@ -76,8 +117,14 @@ export function Footer({ social }: { social: FooterSocialLinks }) {
                 ))}
             </div>
 
-            <h4 className="mb-3 mt-7 font-mono text-[13px] uppercase tracking-wider text-ink-soft">Stay updated</h4>
-            <form onSubmit={handleSubscribe} className="flex max-w-[280px] overflow-hidden rounded-sm border border-themed bg-surface">
+            <h4 className="mb-3 mt-7 font-mono text-[13px] uppercase tracking-wider text-ink-soft">
+              Stay updated
+            </h4>
+
+            <form
+              onSubmit={handleSubscribe}
+              className="flex max-w-[280px] overflow-hidden rounded-sm border border-themed bg-surface"
+            >
               <input
                 type="email"
                 name="email"
@@ -94,7 +141,10 @@ export function Footer({ social }: { social: FooterSocialLinks }) {
                 {status === "success" ? "✓" : status === "loading" ? "…" : "Join"}
               </button>
             </form>
-            {status === "error" && <p className="mt-2 text-xs text-red-500">Something went wrong — try again.</p>}
+
+            {status === "error" && (
+              <p className="mt-2 text-xs text-red-500">Something went wrong — try again.</p>
+            )}
           </div>
 
           <FooterColumn title="Services" links={footerServiceLinks} />
@@ -104,7 +154,10 @@ export function Footer({ social }: { social: FooterSocialLinks }) {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-themed py-6 md:flex-row">
-          <p className="text-[13px] text-ink-soft">© {new Date().getFullYear()} Nucleus Labs. All rights reserved.</p>
+          <p className="text-[13px] text-ink-soft">
+            © {new Date().getFullYear()} Nucleus Labs. All rights reserved.
+          </p>
+
           <div className="flex gap-5">
             <Link href="/privacy" className="text-[13px] text-ink-soft hover:text-brand">
               Privacy Policy
@@ -119,14 +172,26 @@ export function Footer({ social }: { social: FooterSocialLinks }) {
   );
 }
 
-function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+}) {
   return (
     <div>
-      <h4 className="mb-4 font-mono text-[13px] uppercase tracking-wider text-ink-soft">{title}</h4>
+      <h4 className="mb-4 font-mono text-[13px] uppercase tracking-wider text-ink-soft">
+        {title}
+      </h4>
+
       <ul className="flex flex-col gap-3">
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="text-sm text-ink transition-colors hover:text-brand">
+            <Link
+              href={link.href}
+              className="text-sm text-ink transition-colors hover:text-brand"
+            >
               {link.label}
             </Link>
           </li>
