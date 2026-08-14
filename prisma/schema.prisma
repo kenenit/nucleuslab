@@ -120,6 +120,7 @@ model SiteSettings {
   socialTiktok   String   @default("")
   socialYoutube  String   @default("")
   socialGithub   String   @default("")
+  socialTelegram String   @default("")
   updatedAt      DateTime @updatedAt
 }
 

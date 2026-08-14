@@ -6,7 +6,7 @@ import { Save } from "lucide-react";
 const emptyForm = {
   contactEmail: "", contactPhone: "", contactAddress: "", contactHours: "",
   socialLinkedin: "", socialTwitter: "", socialInstagram: "", socialFacebook: "",
-  socialTiktok: "", socialYoutube: "", socialGithub: "",
+  socialTiktok: "", socialYoutube: "", socialGithub: "", socialTelegram: "",
 };
 
 export default function AdminSettingsPage() {
@@ -35,6 +35,7 @@ export default function AdminSettingsPage() {
         socialTiktok: data.socialTiktok ?? "",
         socialYoutube: data.socialYoutube ?? "",
         socialGithub: data.socialGithub ?? "",
+        socialTelegram: data.socialTelegram ?? "",
       });
     } catch {
       setLoadError("Couldn't load settings — the database may be waking up. Try refreshing in a few seconds.");
@@ -107,6 +108,7 @@ export default function AdminSettingsPage() {
             <Field label="TikTok"><input value={form.socialTiktok} onChange={(e) => setForm({ ...form, socialTiktok: e.target.value })} className="input" placeholder="https://tiktok.com/@..." /></Field>
             <Field label="YouTube"><input value={form.socialYoutube} onChange={(e) => setForm({ ...form, socialYoutube: e.target.value })} className="input" placeholder="https://youtube.com/@..." /></Field>
             <Field label="GitHub"><input value={form.socialGithub} onChange={(e) => setForm({ ...form, socialGithub: e.target.value })} className="input" placeholder="https://github.com/..." /></Field>
+            <Field label="Telegram"><input value={form.socialTelegram} onChange={(e) => setForm({ ...form, socialTelegram: e.target.value })} className="input" placeholder="https://t.me/..." /></Field>
           </div>
         </section>
 

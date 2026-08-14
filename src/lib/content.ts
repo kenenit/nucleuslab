@@ -268,12 +268,13 @@ export interface JobDisplay {
   description: string;
 }
 
+// Real job listings only — no fake/placeholder roles are ever shown to
+// site visitors.
 export async function getJobListings(): Promise<JobDisplay[]> {
   try {
     const rows = await withRetry(() =>
       prisma.jobListing.findMany({ where: { published: true }, orderBy: { order: "asc" } })
     );
-    if (rows.length === 0) return staticJobs;
     return rows.map((r) => ({
       slug: r.slug,
       title: r.title,
@@ -283,8 +284,8 @@ export async function getJobListings(): Promise<JobDisplay[]> {
       description: r.description,
     }));
   } catch (err) {
-    console.error("[content] getJobListings falling back to static data", err);
-    return staticJobs;
+    console.error("[content] getJobListings — database unavailable, showing none", err);
+    return [];
   }
 }
 
@@ -301,6 +302,7 @@ export interface SiteSettingsDisplay {
     tiktok: string;
     youtube: string;
     github: string;
+    telegram: string;
   };
 }
 
@@ -309,7 +311,7 @@ const defaultSettings: SiteSettingsDisplay = {
   contactPhone: "+251 92 324 3132",
   contactAddress: "We work remotely — no physical office right now.",
   contactHours: "Mon–Fri, 9:00–18:00 EAT",
-  social: { linkedin: "", twitter: "", instagram: "https://instagram.com/biku.et", facebook: "", tiktok: "", youtube: "", github: "" },
+  social: { linkedin: "", twitter: "", instagram: "https://instagram.com/biku.et", facebook: "", tiktok: "", youtube: "", github: "", telegram: "" },
 };
 
 export async function getSiteSettings(): Promise<SiteSettingsDisplay> {
@@ -329,6 +331,7 @@ export async function getSiteSettings(): Promise<SiteSettingsDisplay> {
         tiktok: row.socialTiktok,
         youtube: row.socialYoutube,
         github: row.socialGithub,
+        telegram: row.socialTelegram,
       },
     };
   } catch (err) {

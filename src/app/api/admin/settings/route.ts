@@ -16,6 +16,7 @@ const settingsInputSchema = z.object({
   socialTiktok: z.string().optional(),
   socialYoutube: z.string().optional(),
   socialGithub: z.string().optional(),
+  socialTelegram: z.string().optional(),
 });
 
 async function requireAdmin() {
