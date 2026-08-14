@@ -15,10 +15,10 @@ export const productLinks = [
 
 export const aboutLinks = [
   { label: "About Nucleus Labs", href: "/about", description: "Our story, vision & values" },
+  { label: "Team", href: "/team", description: "Who's building with you" },
   { label: "Careers", href: "/careers", description: "Open roles & internships" },
   { label: "Industries We Serve", href: "/industries", description: "Sectors we build for" },
   { label: "Our Process", href: "/process", description: "How a project runs, start to finish" },
-  { label: "Testimonials", href: "/testimonials", description: "What clients say" },
   { label: "FAQ", href: "/faq", description: "Common questions answered" },
 ];
 
@@ -27,6 +27,7 @@ export const footerProductLinks = productLinks.map(({ label, href }) => ({ label
 
 export const footerCompanyLinks = [
   { label: "About", href: "/about" },
+  { label: "Team", href: "/team" },
   { label: "Careers", href: "/careers" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
@@ -36,6 +37,5 @@ export const footerResourceLinks = [
   { label: "Portfolio", href: "/portfolio" },
   { label: "Industries", href: "/industries" },
   { label: "Our Process", href: "/process" },
-  { label: "Testimonials", href: "/testimonials" },
   { label: "FAQ", href: "/faq" },
 ];
