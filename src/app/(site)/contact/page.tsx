@@ -1,4 +1,4 @@
-import { Mail, Phone, Clock } from "lucide-react";
+import { Mail, Phone, Clock, Instagram, Music2, Facebook, Send } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -12,6 +12,13 @@ export const metadata = buildMetadata({
 });
 
 export const revalidate = 60;
+
+const socialChannels = [
+  { icon: Instagram, label: "Instagram", handle: "@nucleuslabs_et", href: "https://www.instagram.com/nucleuslabs_et" },
+  { icon: Music2, label: "TikTok", handle: "@nucleuslabs_et", href: "https://www.tiktok.com/@nucleuslabs_et" },
+  { icon: Facebook, label: "Facebook", handle: "nucleuslabs.et", href: "https://www.facebook.com/nucleuslabs.et" },
+  { icon: Send, label: "Telegram Support", handle: "@Nucleus_Labs", href: "https://t.me/Nucleus_Labs" },
+];
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();
@@ -53,6 +60,32 @@ export default async function ContactPage() {
                   </div>
                 );
               })}
+            </div>
+
+            <div className="flex flex-col gap-5 border-t border-themed pt-8">
+              <div className="text-xs font-medium uppercase tracking-wide text-ink-soft">Follow &amp; message us</div>
+              <div className="flex flex-col gap-4">
+                {socialChannels.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3.5 transition-opacity hover:opacity-80"
+                    >
+                      <div className="flex h-10 w-10 flex-none items-center justify-center rounded-sm bg-brand-light text-brand">
+                        <Icon className="h-[18px] w-[18px]" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-medium uppercase tracking-wide text-ink-soft">{s.label}</div>
+                        <div className="text-sm font-medium text-ink">{s.handle}</div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </Reveal>
         </div>

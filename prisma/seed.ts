@@ -154,7 +154,7 @@ async function main() {
       storeUrlAndroid: "https://play.google.com/store/apps/details?id=com.nucleuslabs.bikuhomesolution",
       socialLinks: {
         telegramChannel: "https://t.me/Biku_Home_Solution",
-        telegramSupport: "https://t.me/BIKUSupport",
+        telegramSupport: "https://t.me/Nucleus_Labs",
         instagram: "https://www.instagram.com/biku_home_solution",
         tiktok: "https://vm.tiktok.com/ZS9rfvDVoCsk9-x1Iyg/",
       },
